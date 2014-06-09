@@ -47,18 +47,19 @@ class Register_Model extends Model {
             header('location:' . URL . 'register');
         }
     }
-    public function check($item) {
+    public function checkIfExists($item) {
                
-        $sth= $this->db->prepare("SELECT :item FROM korisnici WHERE :item=:value");
+        $sth= $this->db->prepare("SELECT {$item->item} FROM korisnici WHERE {$item->item}=:value");
         $send=$sth->execute(array(
-                ':item' => $item->item,
-                ':value' => $item->value,
+                ':value' => $item->value
                 ));
-        
+        //var_dump($sth->fetchAll());
         if ($send) {
-           return true;
+           $count=$sth->rowCount();
+           if($count>0) return true;
+           else return false;
         } else {
-           return false;
+           return;
         }
     }
     

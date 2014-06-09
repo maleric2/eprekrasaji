@@ -35,27 +35,79 @@ jQuery(function() {
     })
     glyphicon={};
     glyphicon.ok="<span class='glyphicon glyphicon-ok form-control-feedback'></span>";
-    /*glyphicon.ok="<span class='glyphicon glyphicon-ok form-control-feedback'></span>";
-    glyphicon.ok="<span class='glyphicon glyphicon-ok form-control-feedback'></span>";*/
+    glyphicon.remove="<span class='glyphicon glyphicon-remove form-control-feedback'></span>";
+    /*glyphicon.ok="<span class='glyphicon glyphicon-ok form-control-feedback'></span>";*/
+    messages={}
+    messages.oib={}
+    messages.oib.ok="OIB je slobodan";
+    messages.oib.error="OIB je zauzet";
+    messages.email={}
+    messages.email.ok="Email je slobodan";
+    messages.email.error="Email je zauzet";
+    messages.korime={}
+    messages.korime.ok="Korisničko ime je slobodno";
+    messages.korime.error="Korisničko ime je zauzeto";
+    messages.pass={}
+    messages.pass.ok="Lozinka je snažna";
+    messages.pass.error="Unesite bolju lozinku";
+    messages.pass.error2="Lozinke se ne poklapaju";
     
+    /* Za Bootstrap formu, zahtjeva parenta*/
+    function removeClass(elementParent){
+        elementParent.parent().removeClass( "has-success" );
+        elementParent.parent().removeClass( "has-error" );
+        elementParent.find( "span" ).remove();
+    }
+    /* Za Bootstrap formu, zahtjeva element, klasu koja se doda(string), glyph(string), msg(string)*/
+    function addItems(element, classToAdd, glyph, msg) {
+        elementParent=element.parent();
+        removeClass(elementParent);
+        elementParent.parent().addClass( classToAdd );
+        if(glyph=="ok")
+            element.after( glyphicon.ok );
+        else
+            element.after( glyphicon.remove );
+        if(msg){
+            elementParent.find( ".help-block" ).html(msg);
+        }
+    }
+    /* OIB */
     jQuery("#oib").focusout(function(event){
-        oib=$("#oib");
-        parentEl=oib.parent();
-        parentEl.parent().removeClass( "has-success" );
-        parentEl.find( "span" ).remove();
+        element=$("#oib");
+        parentEl=element.parent();
         $.ajax({
                   type: "GET",
-                  url: URL+"register/check/oib/"+oib.val(),
+                  url: URL+"register/check/oib/"+element.val(),
                   success:function(result2){
                        console.log(result2);
-                       console.log(oib.val());
-                       //4. final response.. will arrive here in result2
+                       console.log(element.val());
+                       /*parentEl.parent().addClass( "has-success" );
+                       $("#oib").after( glyphicon.ok );*/
+                       if(result2=="FALSE")
+                           addItems(element,"has-success", "ok", messages.oib.ok);
+                           
+                       else
+                          addItems(element,"has-error", "remove", messages.oib.error);
                   }
         });
-        parentEl.parent().addClass( "has-success" );
-        $("#oib").after( glyphicon.ok );
-    
     })
-
+    /* OIB */
+    jQuery("#email").focusout(function(event){
+        element=$("#email");
+        parentEl=element.parent();
+        $.ajax({
+                  type: "GET",
+                  url: URL+"register/check/email/"+element.val(),
+                  success:function(result2){
+                       console.log(result2);
+                       console.log(element.val());
+                       if(result2=="FALSE")
+                           addItems(element,"has-success", "ok", messages.email.ok);
+                           
+                       else
+                          addItems(element,"has-error", "remove", messages.email.error);
+                  }
+        });
+    })
 })
 

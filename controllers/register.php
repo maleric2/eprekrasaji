@@ -102,7 +102,7 @@ class Register extends Controller {
     function check($param, $name){
         $item->item=$param;
         $item->value=$name;
-        if($this->model->check($item)){
+        if($this->model->checkIfExists($item)){
             echo "TRUE";
         }
         else echo "FALSE";
