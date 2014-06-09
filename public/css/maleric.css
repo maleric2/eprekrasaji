@@ -1,0 +1,323 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13.03.2014., 10:02:11
+    Author     : vjezbe4
+*/
+body{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+
+    width:95%;
+    margin: 0 auto;
+    background: lavender;
+    background-image: url("../img/bg2.jpg");
+}
+a:link{
+    color: #3498DB;
+}
+a:visited{
+    color:goldenrod;
+}
+.center{
+    display:block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+header{
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+    color: #fff;
+    display:block;
+    background-color: mediumseagreen;
+    background-image:url("../img/logo.png");
+    background-repeat: no-repeat;
+    height:60px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav#izbornik {
+    display:block;
+    width:100%;
+    background:#eaeaea;
+}
+#izbornik > ul{
+    list-style: none;
+    line-height: 1;
+    text-align: center;
+    margin: 0px 0px 5px 0px;
+    padding:4px;
+       
+}
+#izbornik > ul li{
+    display:inline-block;
+    padding:10px 0px;
+    background:whitesmoke;
+    border: 1px gainsboro solid;
+}
+
+#izbornik > ul li:hover{
+    background: lightcyan;
+}
+#izbornik > ul li a{
+    color: #e4433c;
+    text-decoration: none;
+    font-size:medium;
+    padding:15px 20px;
+    padding:10px;
+}
+
+#izbornik > ul li a:hover{
+    color: black;
+}
+
+section#sadrzaj{
+    background: floralwhite;
+    width:100%;
+    display: inline-block;
+    margin-left:auto;
+    margin-right:auto;
+}
+article,#forma1{
+    width: 50%;
+    display: inline-block;    
+}
+article, form{
+    margin-top: 20px;
+    margin-bottom:20px;
+    padding: 20px 0px 15px 20px;
+
+}
+article{
+    width:42%;
+    background: #eaeaea;
+    margin-left: 2%;
+    margin-right: 2%;
+    border: 1px solid lightgray;
+    float:left;
+}
+#blok article{
+    border: none;
+}
+#msg{
+    padding-left: 5px;
+    margin: 10px;
+    margin-bottom: -5px;
+    
+}#msg-right{
+    padding-right: 5px;
+    margin: 10px;
+    margin-bottom: -5px;
+    text-align: right;
+}
+
+#korisnici, #blok{
+    width:95%;
+    display: block;
+}
+dl dt, article p {
+    font-size: 14pt;
+    line-height: 2.5;
+    margin-top: -5px;
+}
+table{
+    width:98%
+}
+form {
+    position: relative;
+    margin-left:auto;
+    margin-right:auto;
+    width:48%;
+    background: #eaeaea;
+    border: 1px gainsboro solid;
+}
+#forma1{
+    display:block;
+    position: relative; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+footer{
+    background-color: mediumseagreen;
+    border-top: 2px black solid;
+    padding:10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    color:#eaeaea;
+    text-align: center;
+    clear: both;
+    display:inline-block;
+    width:100%;
+}
+footer > address > a:link,
+footer > address > a:visited,
+footer > address > a{
+    color:#eaeaea;
+}
+input[type=checkbox]{width:auto;}
+input[type=radio]{display:initial;margin-bottom:5px;}
+input[type=file], input[type=checkbox]{display:initial; margin:0px;}
+textarea{display:block}
+input{
+    border: 1px royalblue dotted;
+    padding:2px;
+    width:47%;
+    display: block;
+    margin: 10px;
+}
+label.registracija, label{
+    color:#555555;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:30%;
+    float:left;
+    clear: both;
+}
+input.registracija{
+    width:auto;
+    border: 1px gray dotted;
+}
+.focus{
+    background-color: beige;
+}
+.error{
+    background-color: lightsalmon;
+}
+.hover{
+    font-weight: bold;
+    color: darkgreen;
+}
+.wronginput{
+    border: 2px solid lightsalmon;
+}
+/* DIV ZA GUMBOVE ISPOD TABLE*/
+#kontrole{
+    width:400px;
+    margin:0 auto;
+}
+#kontrole .gumb {
+    width:90px;
+}
+.gumb{
+    display:initial;
+    width:auto;
+    border: 1px gray dotted;
+    cursor: pointer;
+    margin-top:15px;
+    margin-bottom: 5px;
+    
+    background: #3498db;
+    background-image: linear-gradient( #3498db, #2980b9);
+    border-radius: 18px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+}
+.poruka{
+    text-align: center;
+}
+
+.gumb:hover{
+    background: #3cb0fd;
+    background-image: linear-gradient(#3cb0fd, #3498db);
+}
+
+table th{
+    background:rgb(52, 152, 219);
+    color:white;
+}
+table tr:nth-child(odd){
+    background: ghostwhite;
+}
+table tr:nth-child(even){
+    background: honeydew;
+}
+table tr:hover{
+    background: powderblue;
+}
+
+#gkorisnici, #tkorisnici{
+    width:auto;
+    display: initial;
+    display: -webkit-inline-box;
+}
+.ui-button{
+    margin-right: 5px;
+    color: darkblue;
+}
+.validation{
+    display: inline-block;
+    float:right;
+}
+#kontakt{
+    display: inline-block;
+}
+#vrijeme_izrade{
+    display: flex;
+    
+}
+@media only screen and (max-width:450px){
+    header{
+        display:block;
+        background-image:none;
+        font-size:large;
+        /*width:93%;*/
+        margin:0px;
+    }
+    #sadrzaj{
+        margin:0px;
+        width:100%
+    }
+    article,#blok{
+        width:90%;
+    }
+    #forma1{
+        width:85%;
+        margin-left: 5%;
+    }
+    #forma2{
+        width:90%;
+        margin-left:auto;
+        margin-right: auto;
+    }
+    .gumb{
+        padding:0px;
+        margin:20px 0px;
+        border-radius: 8px;
+    }
+    nav#izbornik{
+        display:block;
+        width:95%;
+        
+    }
+    #izbornik > ul{
+        width:96%;
+        text-align: left;
+        padding: 15px;
+        background: #eaeaea;
+    }
+    #izbornik > ul li{
+        display:block;
+        padding: 10px 0px;
+        width:100%;
+        border-bottom: 1px dotted;
+        background:whitesmoke;
+        margin-bottom: 4px;
+    }
+    #izbornik > ul li:hover{
+        background:aliceblue;
+    }
+    footer{
+        width:98%;
+    }
+}

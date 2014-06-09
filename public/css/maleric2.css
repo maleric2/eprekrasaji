@@ -1,0 +1,92 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13.03.2014., 10:02:11
+    Author     : vjezbe4
+*/
+body{
+    min-height: 2000px;
+    /*padding-top: 70px;*/
+    padding-top: 40px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    background: #e1e3e4;
+    /*background-image: url("../img/bg2.jpg");*/
+    
+}
+
+
+a:link{
+    color: #3498DB;
+}
+a:visited{
+    color:goldenrod;
+}
+
+.navbar-inverse{
+    background-color: #e74c3c!important;
+    border: none!important;
+}
+.navbar-inverse .navbar-nav > li > a{
+    color:#ffffff!important;
+}
+header{
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large;
+    color: #fff;
+    display:block;
+    background-color: #e74c3c;
+    background-repeat: no-repeat;
+    height:60px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.thumbnail{
+    background-color: whitesmoke!important;
+}
+footer{
+    background-color: #e74c3c;
+    border-top: 2px black solid;
+    padding:10px;
+    color:#eaeaea;
+    text-align: center;
+    clear: both;
+    display:inline-block;
+    width:100%;
+}
+footer > address > a:link,
+footer > address > a:visited,
+footer > address > a{
+    color:#eaeaea;
+}
+.validation{
+    display: inline-block;
+    float:right;
+}
+#kontakt{
+    display: inline-block;
+}
+#vrijeme_izrade{
+    display: flex;  
+}
+section{
+    /*background: floralwhite;*/
+    width:100%;
+    display: inline-block;
+    margin-left:auto;
+    margin-right:auto;
+}
+a:link{
+    color: #3498DB;
+}
+a:visited{
+    color:goldenrod;
+}
+.form{
+    background: #e1e3e4;
+}
