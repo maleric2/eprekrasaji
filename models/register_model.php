@@ -66,11 +66,10 @@ class Register_Model extends Model {
     public function update($item) {
                
         $sth= $this->db->prepare("UPDATE korisnici SET "
-                . " oib=:oib, ime=:ime, prezime=:prezime, email=:email,"
+                . " ime=:ime, prezime=:prezime, email=:email,"
                 . " lozinka=:pass,"
                 . " adresa=:adresa WHERE korIme=:username");
         $send=$sth->execute(array(
-                ':oib' => $item->oib,
                 ':ime' => $item->ime,
                 ':prezime' => $item->prezime,
                 ':email' => $item->email,

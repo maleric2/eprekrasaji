@@ -58,11 +58,10 @@ class Korisnici_Model extends Model {
       public function updateUser($item) {
                
         $sth= $this->db->prepare("UPDATE korisnici SET "
-                . " oib=:oib, ime=:ime, prezime=:prezime, email=:email,"
+                . " ime=:ime, prezime=:prezime, email=:email,"
                 . " lozinka=:pass,"
                 . " adresa=:adresa WHERE korIme=:username");
         $send=$sth->execute(array(
-                ':oib' => $item->oib,
                 ':ime' => $item->ime,
                 ':prezime' => $item->prezime,
                 ':email' => $item->email,
@@ -81,9 +80,11 @@ class Korisnici_Model extends Model {
                 ':oib' => $item->oib
             ));
         
-            header('location:' . URL . 'korisnici');
+            /*header('location:' . URL . 'korisnici');*/
+            return true;
         } else {
-            header('location:' . URL . 'error/1');
+           /* header('location:' . URL . 'error/1');*/
+            return false;
         }
     }
     public function insertUser($item) {

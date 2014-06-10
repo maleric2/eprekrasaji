@@ -25,11 +25,11 @@
           </div>
         </div>
         <!-- Text input-->
-        <div class="form-group has-success has-feedback">
+        <div class="form-group has-feedback">
           <label class="col-md-4 control-label" for="korime">Korisničko ime</label>
           <div class="col-md-5">
             <input id="korime" name="korime" type="text" placeholder="username" class="input-md form-control" required="">
-            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span class="glyphicon form-control-feedback"></span>
             <p class="help-block">Unesi korisničko ime</p>
           </div>
         </div>
@@ -39,7 +39,7 @@
           <label class="col-md-4 control-label" for="pass">Lozinka</label>
           <div class="col-md-5">
               <input id="pass" name="pass" type="password" placeholder="password" class="input-md form-control" required="">
-            <p class="help-block">Unesi lozinku</p>
+              <p class="help-block" style="display:none"></p>
           </div>
         </div>
         <!-- Password input-->
@@ -47,7 +47,7 @@
           <label class="col-md-4 control-label" for="pass2">Ponovi Lozinku</label>
           <div class="col-md-5">
               <input id="pass2" name="pass2" type="password" placeholder="password" class="input-md form-control" required="">
-            <p class="help-block">Unesi lozinku</p>
+              <p class="help-block" style="display:none"></p>
           </div>
         </div>
         <!-- Button -->
@@ -61,7 +61,7 @@
     </fieldset>
 </form>
 
-<form id="register_form2" style="display:none" class="form-horizontal col-md-6 col-md-offset-3 thumbnail">
+<form id="register_form2" style="display:none" class="form-horizontal col-md-6 col-md-offset-3 thumbnail" role="form" method="POST" enctype='multipart/form-data' action="register/run" name="register2">
 <fieldset>
 
     <!-- Form Name -->

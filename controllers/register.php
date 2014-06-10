@@ -60,9 +60,31 @@ class Register extends Controller {
         echo json_encode($response);
         //echo $response;
     }
-    function update(){
+    function updateJson(){
         $regitems=$this->getObject($_POST);
-
+        
+        $response=new stdClass();
+        
+        require 'models/korisnici_model.php';
+        $korisnici=new Korisnici_Model();
+        
+        if(!$regitems->email){
+            $user=$korisnici->getUserInfo($regitems->korime);
+            var_dump($user);
+            $regitems->email=$user["email"];
+            $regitems->oib=$user["oib"];
+            $regitems->pass=$user["lozinka"]; 
+        }
+        var_dump($regitems);
+        if($korisnici->updateUser($regitems))
+            $response->ok=true;
+        else
+            $response->ok=false;
+        echo json_encode($response);
+    }
+    function update(){
+        
+        $regitems=$this->getObject($_POST);
         if($this->validation($regitems, 1)) {
             $this->model->update($regitems);
         }
