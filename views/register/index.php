@@ -3,16 +3,36 @@
 </script>
 <script src="<?php echo URL; ?>public/js/registration.js"></script>
 
-<form id="register_form" class="form-horizontal col-md-6 col-md-offset-3 thumbnail" role="form" method="POST" enctype='multipart/form-data' action="register/run" name="register">
-    <fieldset >
-        <!-- Form Name -->
-        <legend>Registration</legend>
+<div class="container">
+	<div class="row form-group">
+        <div class="col-xs-12">
+            <ul id="steps" class="nav nav-pills nav-justified thumbnail setup-panel">
+                <li class="active"><a href="#step-1">
+                    <h4 class="list-group-item-heading">Registracija</h4>
+                    <p class="list-group-item-text">Registracija u sustav ePrekršaja</p>
+                </a></li>
+                <li class="disabled"><a href="#step-2">
+                    <h4 class="list-group-item-heading">Unos detalja</h4>
+                    <p class="list-group-item-text">Unos osobnih detalja</p>
+                </a></li>
+            </ul>
+        </div>
+	</div>
 
+
+<form id="register_form" class="form-horizontal col-md-6 col-md-offset-3" role="form" method="POST" enctype='multipart/form-data' action="register/run" name="register">
+    <fieldset class="panel panel-default">
+        <!-- Form Name -->
+        <div class="panel-heading">
+            <h3 class="panel-title">Registration</h3>
+        </div>
+        
+        <div class="panel-body">
         <!-- Text input-->
         <div class="form-group has-feedback">
           <label class="col-md-4 control-label" for="oib">OIB</label>
           <div class="col-md-5">
-            <input id="oib" name="oib" type="text" placeholder="01234567899" class="input-md form-control" required="">
+              <input id="oib" name="oib" type="text" placeholder="01234567899" class="input-md form-control" required autofocus>
             <p class="help-block">Unesi OIB</p>
           </div>
         </div>
@@ -57,7 +77,7 @@
             <button id="register" name="register" class="btn btn-primary btn-block">Dalje</button>
           </div>
         </div>
-
+        </div>
     </fieldset>
 </form>
 

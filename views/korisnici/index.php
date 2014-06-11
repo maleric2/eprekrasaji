@@ -8,8 +8,8 @@
         ?>
     </h2>
     <p> Aktivni korisnici</p>
-    {% this.currentUser.id_statusRacuna %}
-    <table>
+
+    <table class="table table-striped">
         <tr><th>Ime</th><th>Slika</th>
             <th>Prezime</th><th>Adresa</th>
             <th>E-mail</th><th>Korisnicko ime</th>
@@ -24,11 +24,11 @@
                     if($this->currentUser["id_tipKorisnika"]>1 || $this->currentUser["oib"]==$value['oib']){
                         $brojac++;
                         if($this->currentUser["id_tipKorisnika"]>1 && $this->currentUser["oib"]==$value['oib'])
-                            echo "<tr style='background:lightgreen'>";
+                            echo "<tr class='success'>";
                         else
                             echo "<tr>";
                         echo "<td>{$value['ime']}</td>";
-                        echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='public/img/{$value['putanja']}' height=60></a></td>";
+                        echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='".URL."public/img/{$value['putanja']}' height=60></a></td>";
                         echo "<td>{$value['prezime']}</td>";
                         echo "<td>{$value['adresa']}</td>";
                         echo "<td>{$value['email']}</td>";
@@ -46,7 +46,7 @@
     <br>
     <?php if($this->currentUser["id_tipKorisnika"]>1):?>
     <p> Neaktivni korisnici</p>
-    <table>
+    <table class="table ">
         <tr><th>Ime</th><th>Slika</th>
             <th>Prezime</th><th>Adresa</th>
             <th>E-mail</th><th>Korisnicko ime</th>
@@ -57,11 +57,11 @@
             foreach ($this->korisnici as $key => $value) {
                 if($value['id_statusRacuna']==1){
                     
-                    if($value['obrisan']) echo "<tr style='background:navajowhite' >";
+                    if($value['obrisan']) echo "<tr class='warning' >";
                     else echo "<tr>";
                     
                     echo "<td>{$value['ime']}</td>";
-                    echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='public/img/{$value['putanja']}' height=60></a></td>";
+                    echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='".URL."public/img/{$value['putanja']}' height=60></a></td>";
                     echo "<td>{$value['prezime']}</td>";
                     echo "<td>{$value['adresa']}</td>";
                     echo "<td>{$value['email']}</td>";

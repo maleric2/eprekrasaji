@@ -23,5 +23,6 @@
         </p>
     <section>
 </footer>
+</div>
 </body>
 </html>

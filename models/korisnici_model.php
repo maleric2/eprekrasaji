@@ -17,7 +17,12 @@ class Korisnici_Model extends Model {
         }
         return $data;
     }
-    
+    public function getAllModUsers() {
+        $sth= $this->db->prepare("SELECT * FROM korisnici WHERE id_tipKorisnika=2");
+        $sth->execute();
+        $data=$sth->fetchAll();
+        return $data;
+    }
     public function getUserInfo($korIme) {
                
         $sth= $this->db->prepare("SELECT * FROM korisnici k LEFT JOIN datoteke d ON k.id_profilna_slika=d.id_datoteke WHERE "

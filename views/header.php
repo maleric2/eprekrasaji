@@ -15,6 +15,7 @@
         
 </head>
 <body>
+    <div id="pageContainer">
   <?php Session::init();   ?>  
     
     <!--
@@ -29,13 +30,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a class="navbar-brand" href="#"><img style="margin-top: -8px"src="./public/img/logo.png" height="38px"></a>
+            <a class="navbar-brand" href="#"><img style="margin-top: -8px"src="<?php echo URL; ?>/public/img/logo.png" height="38px"></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="<?php echo URL; ?>index">Home</a></li>
             <?php if(Session::get('loggedIn')==true):?>
                 <li><a href="<?php echo URL; ?>korisnici">Korisnici</a></li>
+                <li><a href="<?php echo URL; ?>admin">Admin</a></li>
             <?php endif; ?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
@@ -83,7 +85,7 @@
     </header>
 
 
-    <section  class="container">
+    <section  class="container" id="pageContent">
         <div>
             <?php     
             

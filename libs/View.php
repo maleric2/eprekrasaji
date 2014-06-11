@@ -17,6 +17,13 @@ class View {
         }
         
     }
-
+    public function advRender($name){
+       require 'views/header.php';
+       foreach ($name as $value) {
+           require 'views/' . $value . '.php';
+       }     
+       require 'views/footer.php';
+        
+    }
 }
 

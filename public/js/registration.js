@@ -76,6 +76,7 @@ jQuery(function() {
     messages.korime={}
     messages.korime.ok="Korisničko ime je slobodno";
     messages.korime.error="Korisničko ime je zauzeto";
+    messages.korime.error2="Korisničko ime je prekratko";
     messages.pass={}
     messages.pass.ok="Lozinka je ispravna";
     messages.pass.error="Unesite bolju lozinku";
@@ -162,6 +163,11 @@ jQuery(function() {
         element=$("#korime");
         parentEl=element.parent();
         if(!element.val()) return;
+        var pattern = new RegExp(/^[+a-zA-Z0-9._-]{3,20}$/i);
+        if(!pattern.test(element.val())){
+            addItems(element,"has-error", "remove", messages.korime.error2);
+            return;
+        }
         $.ajax({
                   type: "GET",
                   url: URL+"register/check/korime/"+element.val(),
