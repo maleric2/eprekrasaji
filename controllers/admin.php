@@ -32,21 +32,26 @@ class admin extends Controller{
     function prekrsaji($action=NULL, $id=NULL){
         require 'models/prekrsaji_model.php';
         $prekrsaji=new Prekrsaji_Model();
+        require 'models/korisnici_model.php';
+        $korisnici=new Korisnici_Model();
+        
         $this->view->prekrsaji=$prekrsaji->getAllPrekrsaji();
+        $this->view->policajci=$korisnici->getAllModUsers();
+        $this->view->kategorije=$prekrsaji->getAllActiveKategorije();
+        
         if($action=="change"){
             foreach ($this->view->prekrsaji as $value) {
                 if($id==$value["id_prekrsaji"]){
                     $this->view->prekrsaj=$value;
+                    $this->view->datoteke=$prekrsaji->getAllDatoteke($id);
                 }
             }
             $pages=array('admin/header','crud/prekrsaji_change', 'admin/footer');
         }
         else if($action=="insert"){
             $pages=array('admin/header','crud/prekrsaji_insert', 'admin/footer');
-            require 'models/korisnici_model.php';
-            $korisnici=new Korisnici_Model();
-            $this->view->policajci=$korisnici->getAllModUsers();
-            $this->view->kategorije=$prekrsaji->getAllActiveKategorije();
+            
+            
             
         }
         else if($action==NULL)

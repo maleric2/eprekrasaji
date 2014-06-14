@@ -13,6 +13,7 @@ class Prekrsaji_Model extends Model {
         return $data;
     }
     /* Sredit unos, oib ispisat ime prezime a oib je value*/
+    /* POLICAJAC OIB POLICAJAC, veze se preko*/
     public function insert($item) {
         if(empty($item->adresa)) $item->adresa=NULL;
 
@@ -28,6 +29,9 @@ class Prekrsaji_Model extends Model {
                 ':vrijeme_zastare' => $item->vrijeme_zastare,
                 ':oib_policajca' => $item->policajac_oib_policajac
                 ));
+
+
+        //print_r($sth->errorInfo());
         /* napravit funkciju koja senda u logove unutar Model*/
         if ($send) {
             $sth = $this->db->prepare("INSERT INTO tipOstaleRadnje VALUES "
@@ -38,7 +42,9 @@ class Prekrsaji_Model extends Model {
                 ':radnja' => "registracija",
                 ':oib' => $item->oib
             ));
-            return true;
+
+            $last_id =  $this->db->lastInsertId();
+            return $last_id;
         } else {
             return false;
         }
@@ -75,4 +81,41 @@ class Prekrsaji_Model extends Model {
         $data=$sth->fetchAll();
         return $data;
     }
+    public function getAllDatoteke($id_prekrsaj) {
+        $sth= $this->db->prepare("SELECT * FROM prilozi p JOIN datoteke d ON p.datoteke_id_datoteke = d.id_datoteke WHERE prekrsaji_id_prekrsaji=:id_prekrsaj");
+        $sth->execute(array(
+                ':id_prekrsaj' => $id_prekrsaj
+                ));
+        $data=$sth->fetchAll();
+        return $data;
+    }
+    public function insertPrilozi($item){
+        if(!$item->id_prekrsaji)return false;      
+        if(!$item->id_datoteke) return false;
+        
+        
+        $sth= $this->db->prepare("INSERT INTO prilozi VALUES "
+                . "(:id_prilozi, :prekrsaji_id_prekrsaji, :datoteke_id_datoteke )");
+        $send=$sth->execute(array(
+                ':id_prilozi' => "DEFAULT",
+                ':prekrsaji_id_prekrsaji' => $item->id_prekrsaji,
+                ':datoteke_id_datoteke' => $item->id_datoteke
+                ));
+        /* napravit funkciju koja senda u logove unutar Model*/
+        if ($send) {
+            /*$sth = $this->db->prepare("INSERT INTO tipOstaleRadnje VALUES "
+                    . "(:id, :time, :radnja, :oib)");
+            $send = $sth->execute(array(
+                ':id' => "default",
+                ':time' => "now()",
+                ':radnja' => "registracija",
+                ':oib' => $item->oib
+            ));*/
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
 }
