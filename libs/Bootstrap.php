@@ -28,9 +28,11 @@ class Bootstrap {
         $controller->loadModel($url[0]);
         
         //Ako je unesena metoda npr help/other
+        /*3 parametra max*/
         if (isset($url[2])) {
             if (method_exists($controller, $url[1])) {
-                 if (isset($url[3])) $controller->{$url[1]}($url[2],$url[3]);
+                 if (isset($url[4])) $controller->{$url[1]}($url[2],$url[3],$url[4]);   
+                 else if (isset($url[3])) $controller->{$url[1]}($url[2],$url[3]);
                  else $controller->{$url[1]}($url[2]);
             } else {
 		$this->error();

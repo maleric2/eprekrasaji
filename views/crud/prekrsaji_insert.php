@@ -1,4 +1,5 @@
 <h1 class="center">Novi prekrsaj <?php //echo $this->user['korIme']    ?></h1>
+
 <?php /* DODAT I SLIKE VEZANE I SVE OSTALO */
 ?>
 <form id="forma3" name="details" class="form-horizontal" action="<?php echo URL ?>crud/prekrsaji/insert/" method="POST" enctype="multipart/form-data">
@@ -70,27 +71,7 @@
                 </div>
             </div>
 
-            <!-- SREDIT TIPA DODAJ NOVU SLIKU i SL. -->
-            <script type="text/javascript">
 
-                function PreviewImage() {
-                    index=0
-                    do{
-                        var oFReader = new FileReader();
-                    
-                        oFReader.readAsDataURL(document.getElementById("picture").files[index]);
-
-                        oFReader.onload = function(oFREvent) {
-                            //document.getElementById("uploadPreview").src = oFREvent.target.result;
-                            $("#putImage").append('<img src='+oFREvent.target.result+' style="width: 100px; height: 100px;" />')
-                        };
-                        index=index+1;
-                    }while(document.getElementById("picture").files[index]);
-                    
-                }
-                ;
-
-            </script>
             
             <div class="form-group">
                 <label class="col-md-4 control-label" for="register"></label>
@@ -100,3 +81,6 @@
             </div>
     </fieldset>
 </form>
+
+            <!-- Image Preview, stavlja na #putImage -->
+<script type="text/javascript" src="<?php echo URL; ?>public/js/PreviewImage.js"></script>

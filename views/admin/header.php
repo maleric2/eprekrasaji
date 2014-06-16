@@ -11,6 +11,7 @@
           <li><a href="#"><i class="icon-comment"></i> Comments <span class="badge badge-info">10</span></a></li>
 		  <li class="active"><a href="<?php echo URL; ?>admin/korisnici"><i class="icon-user"></i> Korisnici</a></li>
 		  <li class="active"><a href="<?php echo URL; ?>admin/prekrsaji"><i class="icon-user"></i> Prekršaji</a></li>
+		  <li class="active"><a href="<?php echo URL; ?>admin/slike"><i class="icon-user"></i> Slike</a></li>
           <li class="divider"></li>
 		  <li><a href="#"><i class="icon-comment"></i> Settings</a></li>
 		  <li><a href="#"><i class="icon-share"></i> Logout</a></li>

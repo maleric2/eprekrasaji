@@ -28,7 +28,7 @@ class admin extends Controller{
         $this->view->advRender($pages);
         
     }
-    //action=null,change,delete,insert
+    //action=null,change,delete,insert,details(view)
     function prekrsaji($action=NULL, $id=NULL){
         require 'models/prekrsaji_model.php';
         $prekrsaji=new Prekrsaji_Model();
@@ -43,19 +43,44 @@ class admin extends Controller{
             foreach ($this->view->prekrsaji as $value) {
                 if($id==$value["id_prekrsaji"]){
                     $this->view->prekrsaj=$value;
-                    $this->view->datoteke=$prekrsaji->getAllDatoteke($id);
+                    $this->view->datoteke=$prekrsaji->getDatoteke($id);
                 }
             }
             $pages=array('admin/header','crud/prekrsaji_change', 'admin/footer');
         }
         else if($action=="insert"){
-            $pages=array('admin/header','crud/prekrsaji_insert', 'admin/footer');
-            
-            
-            
+            $pages=array('admin/header','crud/prekrsaji_insert', 'admin/footer');  
+        }
+        else if($action=="details"){
+            foreach ($this->view->prekrsaji as $value) {
+                if($id==$value["id_prekrsaji"]){
+                    $this->view->prekrsaj=$value;
+                    $this->view->datoteke=$prekrsaji->getDatoteke($id);
+                }
+            }
+            $pages=array('admin/header','crud/prekrsaji_view', 'admin/footer');  
         }
         else if($action==NULL)
             $pages=array('admin/header','crud/prekrsaji', 'admin/footer');
+        else
+            header('location:' . URL . 'error');
+        $this->view->advRender($pages);
+    }
+    //id of prekrsaj
+    function slike($id=NULL){
+        require 'models/prekrsaji_model.php';
+        $prekrsaji=new Prekrsaji_Model();
+        
+        if($id==NULL){
+            $this->view->datoteke=$prekrsaji->getAllDatoteke();
+            $pages=array('admin/header','crud/slike', 'admin/footer');
+        }
+        /* ako je prosljedjen broj*/
+        else if(is_numeric($id)){
+            $this->view->datoteke=$prekrsaji->getDatoteke($id);
+            $this->view->prekrsaj['id_prekrsaja']=$id;
+            $pages=array('admin/header','crud/slike', 'admin/footer');
+        }
         else
             header('location:' . URL . 'error');
         $this->view->advRender($pages);

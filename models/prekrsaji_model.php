@@ -81,13 +81,27 @@ class Prekrsaji_Model extends Model {
         $data=$sth->fetchAll();
         return $data;
     }
-    public function getAllDatoteke($id_prekrsaj) {
+    public function getDatoteke($id_prekrsaj) {
         $sth= $this->db->prepare("SELECT * FROM prilozi p JOIN datoteke d ON p.datoteke_id_datoteke = d.id_datoteke WHERE prekrsaji_id_prekrsaji=:id_prekrsaj");
         $sth->execute(array(
                 ':id_prekrsaj' => $id_prekrsaj
                 ));
         $data=$sth->fetchAll();
         return $data;
+    }
+    public function getAllDatoteke() {
+        $sth= $this->db->prepare("SELECT * FROM prilozi p JOIN datoteke d ON p.datoteke_id_datoteke = d.id_datoteke");
+        $sth->execute();
+        $data=$sth->fetchAll();
+        return $data;
+    }
+    public function deleteDatoteke($id_datoteke) {
+        $sth= $this->db->prepare("DELETE FROM datoteke WHERE id_datoteke=:id");
+        $send=$sth->execute(array(
+                ':id' => $id_datoteke
+                ));
+        if($send) return true;
+        else return false;
     }
     public function insertPrilozi($item){
         if(!$item->id_prekrsaji)return false;      

@@ -31,11 +31,10 @@ class crud extends Controller {
 
     //action=null,change,delete,insert
     function prekrsaji($action = NULL, $id = NULL) {
-
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
 
-        /*      CHANGE      */  
+        /*      CHANGE      */
         if ($action == "change") {
             $prekrsaj = $this->getObject($_POST);
             $prekrsaji->update($prekrsaj);
@@ -46,8 +45,8 @@ class crud extends Controller {
             else {
                 header('location:' . URL . 'error');
             }
-            
-        /*      INSERT      */    
+
+            /*      INSERT      */
         } else if ($action == "insert") {
             $prekrsaj = $this->getObject($_POST);
             $prekrsaj->vrijeme_prekrsaja = $prekrsaj->datum . ' ' . $prekrsaj->vrijeme;
@@ -83,12 +82,12 @@ class crud extends Controller {
             if (!$prekrsaj->id_prekrsaji) {
                 header('location:' . URL . 'error');
             } else {
-                /* insert svih datoteka i slika*/
+                /* insert svih datoteka i slika */
                 foreach ($datoteke as $picture) {
                     $prekrsaj->id_datoteke = $prekrsaji->insertDatoteke($picture);
                     $prekrsaji->insertPrilozi($prekrsaj);
                 }
-                
+
                 header('location:' . URL . 'admin/prekrsaji');
             }
 
@@ -99,6 +98,67 @@ class crud extends Controller {
             header('location:' . URL . 'error');
 
         $this->view->advRender($pages);
+    }
+
+    
+    
+    //action=null,change,delete,insert
+    function slike($action = NULL, $id_prekrsaj=NULL, $id_slike = NULL) {
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        $prekrsaj->id_prekrsaji=$id_prekrsaj;
+
+        if ($action == "insert") {
+            $datoteke=$this->insertSlikeInDir($_FILES['picture']);
+            if($id_prekrsaj){
+ 
+                foreach ($datoteke as $picture) {
+                    $prekrsaj->id_datoteke = $prekrsaji->insertDatoteke($picture);
+                    $prekrsaji->insertPrilozi($prekrsaj);
+                }
+                header('location:' . URL . 'admin/slike/'.$prekrsaj->id_prekrsaji);
+            }
+            /*else insert datoteka za profilnu*/
+                
+        }
+        else if ($action == "delete") {
+            if($id_slike){
+                if($prekrsaji->deleteDatoteke($id_slike))
+                    header('location:' . URL . 'admin/slike/'.$prekrsaj->id_prekrsaji);
+                else
+                    header('location:' . URL . 'error');
+            }
+            else /*insert datoteka*/
+                header('location:' . URL . 'error');
+                
+        }
+        else
+            header('location:' . URL . 'error');
+    }
+    function insertSlikeInDir($files) {
+        $allowed = array('png', 'jpg', 'gif', 'zip');
+        $file_ary = $this->reArrayFiles($files);
+        //var_dump($file_ary);
+        $pic_number = 0;
+        foreach ($file_ary as $file) {
+            $datoteke[$pic_number] = new stdClass();
+            $datoteke[$pic_number]->naziv = NULL;
+            $datoteke[$pic_number]->putanja = NULL;
+            if (isset($file) && $file['error'] == 0) {
+                $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $datoteke[$pic_number]->naziv = $file['name']; /* */
+
+                if (!in_array(strtolower($extension), $allowed)) {
+                    header('location:' . URL . 'error');
+                }
+
+                if (move_uploaded_file($file['tmp_name'], 'public/img/' . $file['name'])) {
+                    $datoteke[$pic_number]->putanja = 'public/img/' . $file['name']; /* */
+                }
+                $pic_number++;
+            }
+        }
+        return $datoteke;
     }
 
     function reArrayFiles(&$file_post) {

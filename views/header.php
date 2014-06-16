@@ -11,7 +11,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/css/bootstrap.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="<?php echo URL; ?>public/js/bootstrap.js"></script>
-    <title>Zadaca 05</title>
+    <!-- Owl Carousel Assets -->
+    <link href="<?php echo URL; ?>public/css/owl.carousel.css" rel="stylesheet">
+    <link href="<?php echo URL; ?>public/css/owl.theme.css" rel="stylesheet">
+    <title>ePrekršaji</title>
         
 </head>
 <body>
@@ -81,7 +84,7 @@
         </ul>
     </nav>-->
     <header>
-        Zadaca 05 
+       ePrekršaji 
     </header>
 
 
