@@ -20,7 +20,7 @@
         <?php
             $brojac=0;
             foreach ($this->korisnici as $key => $value) {
-                if($value['id_statusRacuna']>1){
+                if($value['id_statusRacuna']==2){
                     if($this->currentUser["id_tipKorisnika"]>1 || $this->currentUser["oib"]==$value['oib']){
                         $brojac++;
                         if($this->currentUser["id_tipKorisnika"]>1 && $this->currentUser["oib"]==$value['oib'])
@@ -28,14 +28,14 @@
                         else
                             echo "<tr>";
                         echo "<td>{$value['ime']}</td>";
-                        echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='".URL."public/img/{$value['putanja']}' height=60></a></td>";
+                        echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='".URL."{$value['putanja']}' height=60></a></td>";
                         echo "<td>{$value['prezime']}</td>";
                         echo "<td>{$value['adresa']}</td>";
                         echo "<td>{$value['email']}</td>";
                         echo "<td>{$value['korIme']}</td>";
                         echo "<td><a href='".URL."korisnici/details/{$value['korIme']}'>Details</a></td>";
-                        echo "<td><a href='".URL."korisnici/delete/{$value['korIme']}'>Obrisi</a></td>";
-                        echo "<td><a href='".URL."korisnici/change/{$value['korIme']}'>Promjeni</a></td>";
+                        echo "<td><a href='./korisnici/delete/{$value['korIme']}'>Obrisi</a></td>";
+                        echo "<td><a href='".URL."admin/korisnici/change/{$value['korIme']}'>Promjeni</a></td>";
                         echo"</tr>";
                     }
                 }

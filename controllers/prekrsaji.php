@@ -1,6 +1,6 @@
 <?php
 
-class Korisnici extends Controller {
+class Prekrsaji extends Controller {
 
     function __construct() {
         parent::__construct();
@@ -16,10 +16,12 @@ class Korisnici extends Controller {
         }
     }
 
-    function index() {
+    function index( $korime=NULL) {
         Session::init();
-        $this->view->korisnici = $this->model->getAllUsersInfo();
-        $this->view->render('crud/korisnici');
+        if($korime==null)$korime=$this->view->currentUser["korIme"];
+
+        $this->view->prekrsaji = $this->model->getUserPrekrsaji($korime);
+        $this->view->render('crud/prekrsaji');
     }
 
     function details($korIme) {
@@ -47,13 +49,10 @@ class Korisnici extends Controller {
 
         if ($this->view->currentUser["id_tipKorisnika"] > 1) {
             $this->userToActivate = $this->model->getUserInfo($korIme);
-            $this->userToActivate['id_statusRacuna'] = 2;
+            $this->userToActivate['status'] = 2;
             $this->userToActivate['obrisan'] = 0;
             $user = $this->getObject($this->userToActivate);
-            if ($this->model->updateUser($user))
-                header('location:' . URL . 'korisnici');
-            else
-                header('location:' . URL . 'error/other/3');
+            $this->model->updateUser($user);
         } else {
             header('location:' . URL . 'error/other/3');
         }
@@ -61,19 +60,14 @@ class Korisnici extends Controller {
 
     function delete($korIme) {
 
-        if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+        if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
             $this->userToDelete = $this->model->getUserInfo($korIme);
-            $this->userToDelete['id_statusRacuna'] = 1;
+            $this->userToDelete['status'] = 1;
             $this->userToDelete['obrisan'] = 1;
             $user = $this->getObject($this->userToDelete);
-            if ($this->model->updateUser($user))
-                header('location:' . URL . 'korisnici');
-            else {
-                if ($this->view->currentUser["korIme"] === $korIme)
-                    header('location:' . URL . 'login/logout');
-                else
-                    header('location:' . URL . 'error/other/3');
-            }
+            $this->model->updateUser($user);
+            if ($this->view->currentUser["korIme"] === $korIme)
+                header('location:' . URL . 'login/logout');
         }
         else {
             header('location:' . URL . 'error/other/3');
@@ -89,12 +83,12 @@ class Korisnici extends Controller {
             require 'models/prekrsaji_model.php';
             $prekrsaji = new Prekrsaji_Model();
             $userOld = $this->model->getUserInfo($user->korime);
-            if ($userOld["id_profilna_slika"]) {
-                $prekrsaji->deleteDatoteke($userOld["id_profilna_slika"]);
+            if($userOld["id_profilna_slika"]){
+                $prekrsaji->deleteDatoteke($userOld["id_profilna_slika"]);               
             }
-
+   
             $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
-
+            
             $user->id_profilna_slika = $prekrsaji->insertDatoteke($datoteka);
             //var_dump($user->id_profilna_slika);
             if ($this->model->updateUser($user))
@@ -105,7 +99,6 @@ class Korisnici extends Controller {
     }
 
     /* INSERT POJEDINACNE SLIKE (PROFILE PICTURE) */
-
     function insertSlikaInDir($files, $path) {
         $allowed = array('png', 'jpg', 'gif', 'zip');
         $datoteka = new stdClass();

@@ -14,6 +14,14 @@
   <form id="forma2" class="form-horizontal" name="details" method="" >
         <fieldset class="panel panel-default">
         <div class="panel-body">
+            <?php if ($this->user['putanja']): ?>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="currentPicture">Slika</label>
+                <div class="col-md-5">
+                    <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+                </div>
+            </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ime">Ime</label>
                 <div class="col-md-5">

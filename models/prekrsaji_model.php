@@ -12,6 +12,21 @@ class Prekrsaji_Model extends Model {
         $data=$sth->fetchAll();
         return $data;
     }
+    /*insert new dosje: update korisnici->dosje, if dosje=NULL,
+     *                  new dosje
+     *                  prekrsaj_korisnika(id_prekrsaja NOVOG, id_dosje POSTOJECI)
+     */ 
+    public function getUserPrekrsaji($username) {
+        $sth= $this->db->prepare("SELECT * FROM korisnici k "
+                . "JOIN dosje d ON k.dosje_id_dosje=d.id_dosje "
+                . "JOIN prekrsaj_korisnika p ON p.dosje_id_dosje=d.id_dosje "
+                . "JOIN prekrsaji pr ON pr.id_prekrsaji=p.prekrsaji_id_prekrsaji WHERE korIme=:username");
+        $sth->execute(array(
+                ':username' => $username
+            ));
+        $data=$sth->fetchAll();
+        return $data;
+    }
     /* Sredit unos, oib ispisat ime prezime a oib je value*/
     /* POLICAJAC OIB POLICAJAC, veze se preko*/
     public function insert($item) {
@@ -90,7 +105,7 @@ class Prekrsaji_Model extends Model {
         return $data;
     }
     public function getAllDatoteke() {
-        $sth= $this->db->prepare("SELECT * FROM prilozi p JOIN datoteke d ON p.datoteke_id_datoteke = d.id_datoteke");
+        $sth= $this->db->prepare("SELECT * FROM datoteke");
         $sth->execute();
         $data=$sth->fetchAll();
         return $data;

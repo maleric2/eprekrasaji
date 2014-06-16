@@ -60,21 +60,48 @@ class Korisnici_Model extends Model {
             header('location:' . URL . 'error/1');
         }
       }*/
+    /*public function updateStatusUser($item) {
+        $sth= $this->db->prepare("UPDATE korisnici SET "
+                . " obrisan=:obrisan, id_statusRacuna=:status"
+                . " WHERE oib=:oib");
+        print $item->oib ."  ";
+        print $item->obrisan. "  ";
+        print $item->id_statusRacuna. "  ";
+        $send=$sth->execute(array(
+                ':oib' => $item->oib,
+                ':obrisan' => $item->obrisan,
+                ':status' => $item->id_statusRacuna
+                ));
+        if($send)
+            return true;
+        else
+            return false;
+        }*/
       public function updateUser($item) {
-               
+          if(!$item->id_profilna_slika)$item->id_profilna_slika=NULL;
+          if(!$item->obrisan)$item->obrisan=0;
+          if(!$item->id_statusRacuna)$item->id_statusRacuna=2;
+          if(!$item->oib){
+              $userOld=$this->getUserInfo($item->korime);
+              $item->oib=$userOld->oib;              
+          }
+
         $sth= $this->db->prepare("UPDATE korisnici SET "
                 . " ime=:ime, prezime=:prezime, email=:email,"
-                . " lozinka=:pass,"
-                . " adresa=:adresa WHERE korIme=:username");
+                . " lozinka=:pass, obrisan=:obrisan, id_statusRacuna=:status,"
+                . " adresa=:adresa, id_profilna_slika=:id_profilna_slika WHERE oib=:oib");
         $send=$sth->execute(array(
                 ':ime' => $item->ime,
                 ':prezime' => $item->prezime,
                 ':email' => $item->email,
-                ':username' => $item->korime,
+                ':oib' => $item->oib,
                 ':pass' => $item->pass,
-                ':adresa' => $item->adresa
+                ':adresa' => $item->adresa,
+                ':obrisan' => $item->obrisan,
+                ':status' => $item->id_statusRacuna,
+                ':id_profilna_slika'=>$item->id_profilna_slika
                 ));
-        
+        //print_r($sth->errorInfo());
         if ($send) {
             $sth = $this->db->prepare("INSERT INTO tipOstaleRadnje VALUES "
                     . "(:id, :time, :radnja, :oib)");

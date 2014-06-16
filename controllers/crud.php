@@ -100,41 +100,35 @@ class crud extends Controller {
         $this->view->advRender($pages);
     }
 
-    
-    
     //action=null,change,delete,insert
-    function slike($action = NULL, $id_prekrsaj=NULL, $id_slike = NULL) {
+    function slike($action = NULL, $id_prekrsaj = NULL, $id_slike = NULL) {
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
-        $prekrsaj->id_prekrsaji=$id_prekrsaj;
+        $prekrsaj->id_prekrsaji = $id_prekrsaj;
 
         if ($action == "insert") {
-            $datoteke=$this->insertSlikeInDir($_FILES['picture']);
-            if($id_prekrsaj){
- 
+            $datoteke = $this->insertSlikeInDir($_FILES['picture']);
+            if ($id_prekrsaj) {
+
                 foreach ($datoteke as $picture) {
                     $prekrsaj->id_datoteke = $prekrsaji->insertDatoteke($picture);
                     $prekrsaji->insertPrilozi($prekrsaj);
                 }
-                header('location:' . URL . 'admin/slike/'.$prekrsaj->id_prekrsaji);
+                header('location:' . URL . 'admin/slike/' . $prekrsaj->id_prekrsaji);
             }
-            /*else insert datoteka za profilnu*/
-                
-        }
-        else if ($action == "delete") {
-            if($id_slike){
-                if($prekrsaji->deleteDatoteke($id_slike))
-                    header('location:' . URL . 'admin/slike/'.$prekrsaj->id_prekrsaji);
+            /* else insert datoteka za profilnu */
+        } else if ($action == "delete") {
+            if ($id_slike) {
+                if ($prekrsaji->deleteDatoteke($id_slike))
+                    header('location:' . URL . 'admin/slike/' . $prekrsaj->id_prekrsaji);
                 else
                     header('location:' . URL . 'error');
-            }
-            else /*insert datoteka*/
+            } else /* insert datoteka */
                 header('location:' . URL . 'error');
-                
-        }
-        else
+        } else
             header('location:' . URL . 'error');
     }
+
     function insertSlikeInDir($files) {
         $allowed = array('png', 'jpg', 'gif', 'zip');
         $file_ary = $this->reArrayFiles($files);
@@ -160,6 +154,8 @@ class crud extends Controller {
         }
         return $datoteke;
     }
+
+    
 
     function reArrayFiles(&$file_post) {
 

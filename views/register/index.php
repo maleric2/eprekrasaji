@@ -18,7 +18,7 @@
             </ul>
         </div>
 	</div>
-
+</div>
 
 <form id="register_form" class="form-horizontal col-md-6 col-md-offset-3" role="form" method="POST" enctype='multipart/form-data' action="register/run" name="register">
     <fieldset class="panel panel-default">
@@ -72,9 +72,9 @@
         </div>
         <!-- Button -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="register"></label>
+          <label class="col-md-4 control-label" for="register_next"></label>
           <div class="col-md-5">
-            <button id="register" name="register" class="btn btn-primary btn-block">Dalje</button>
+            <button id="register_next" name="register_next" class="btn btn-primary btn-block">Dalje</button>
           </div>
         </div>
         </div>
@@ -123,9 +123,9 @@
     </div>
     <!-- Button -->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="register"></label>
+      <label class="col-md-4 control-label" for="register_end"></label>
       <div class="col-md-5">
-        <button id="register" name="register" class="btn btn-success btn-block">Dovrši</button>
+        <button id="register_end" name="register_end" class="btn btn-success btn-block">Dovrši</button>
       </div>
     </div>
 </fieldset>

@@ -12,9 +12,29 @@ if ($this->user['obrisan']) {
     $this->user['status'] = "OBRISAN";
 }
 ?>
-<form id="forma3" class="form-horizontal" name="details" action="<?php echo URL ?>register/update" method="POST" >
+<form id="forma3" class="form-horizontal" name="details" action="<?php echo URL ?>korisnici/update" method="POST" enctype="multipart/form-data" >
     <fieldset class="panel panel-default">
+        
         <div class="panel-body">
+             <?php if ($this->user['putanja']): ?>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="currentPicture"></label>
+                <div class="col-md-5">
+                    <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+                </div>
+            </div>
+            <?php endif; ?>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="picture"></label>
+                <div class="col-md-5">
+                    <div id="putImage">
+
+                    </div>
+                    <input id="picture" type="file" name="picture" onchange="PreviewImage();" />
+                    <span class="help-block">Promjeni profilnu sliku</span>  
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ime">Ime</label>
                 <div class="col-md-5">
@@ -63,22 +83,19 @@ if ($this->user['obrisan']) {
                     <input class="input-md form-control" type="text" id="pass" name="pass" value="<?php echo $this->user['lozinka']; ?>" > 
                 </div>
             </div>
+            
             <div class="form-group">
-                <label class="col-md-4 control-label" for="slika">Putanja slike</label>
-                <div class="col-md-5">
-                    <input class="input-md form-control" type="text" id="slika" name="slika" value="<?php echo $this->user['putanja']; ?>" readonly disabled >
-                </div>
-            </div>
-            <div class="form-group">
-            <label class="col-md-4 control-label" for="promjeni"></label>
+                <label class="col-md-4 control-label" for="promjeni"></label>
                 <div class="col-md-5">
                     <button type="submit" id="promjeni" name="promjeni" class="btn btn-primary btn-block">Ažuriraj</button>
+                </div>
             </div>
-            </div>
-        </div>
+
     </fieldset>
 </form>
 <article id="blok">
     <a>*Pri uspješnom ažuriranju dobit ćete <b>poruku o uspješnosti na mail</b></a> <br>
     <a>*Korisničko ime, putanju slike i status računa nije moguće izmjeniti</a>
 </article>
+<!-- Image Preview, stavlja na #putImage -->
+<script type="text/javascript" src="<?php echo URL; ?>public/js/PreviewImage.js"></script>

@@ -15,13 +15,13 @@
         </p>
         <p class="validation">
 
-            <a href="http://validator.w3.org/check?uri=http://arka.foi.hr<?php echo $_SERVER["REQUEST_URI"];?>"><img src="<?php echo URL; ?>public/img/HTML5_Logo_256.png" height="40" alt="Valid HTML5!" /></a>
+            <a href="http://validator.w3.org/check?uri=http://arka.foi.hr<?php echo $_SERVER["REQUEST_URI"]; ?>"><img src="<?php echo URL; ?>public/img/HTML5_Logo_256.png" height="40" alt="Valid HTML5!" /></a>
         </p>
         <p id="vrijeme_izrade">
             Vrijeme izrade trenutne stranice: 2h <br>
             Vrijeme izrade cijele stranice: 15h <br>
         </p>
-    <section>
+    </section>  
 </footer>
 </div>
 </body>
