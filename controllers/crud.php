@@ -50,8 +50,23 @@ class crud extends Controller {
         } else if ($action == "insert") {
             $prekrsaj = $this->getObject($_POST);
             $prekrsaj->vrijeme_prekrsaja = $prekrsaj->datum . ' ' . $prekrsaj->vrijeme;
-
-
+            /* DOSJE */
+            $korisnik=array();
+            $brKorisnika=0;
+            foreach($prekrsaj->oib as $korisnikPrekrsaja){
+                $korisnik[$brKorisnika]=new stdClass();
+                $korisnik[$brKorisnika]->oib=$korisnikPrekrsaja;
+                $dosje_id_dosje=$prekrsaji->query("SELECT ? from ? where oib = ?", array("dosje_id_dosje", "korisnici", $korisnik[$brKorisnika]->oib));
+                //print_r($korisnik[$brKorisnika]);
+                //print_r($dosje_id_dosje);
+                if(empty($dosje_id_dosje[0])){
+                    $korisnik[$brKorisnika]->id_dosje=$prekrsaji->insertNewDosje($korisnik[$brKorisnika]);
+                }
+                else
+                    $korisnik[$brKorisnika]->id_dosje=$dosje_id_dosje[0];
+                //print_r($korisnik[$brKorisnika]->id_dosje);
+                $brKorisnika++;
+            }
             // A list of permitted file extensions
             $allowed = array('png', 'jpg', 'gif', 'zip');
             //echo '<pre>';
@@ -78,7 +93,13 @@ class crud extends Controller {
                 }
             }
             $prekrsaj->id_prekrsaji = $prekrsaji->insert($prekrsaj);
-
+            
+            /* PREKRSAJ ZA SVAKOG KORISNIKA */
+            foreach($korisnik as $korisnikPrekrsaja){
+                $korisnikPrekrsaja->id_prekrsaji=$prekrsaj->id_prekrsaji;
+                $prekrsaji->insertPrekrsajKorisnika($korisnikPrekrsaja);
+            }
+            
             if (!$prekrsaj->id_prekrsaji) {
                 header('location:' . URL . 'error');
             } else {

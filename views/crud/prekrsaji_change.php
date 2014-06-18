@@ -1,4 +1,4 @@
-<h1 class="center">Ažuriraj prekrsaj <?php //echo $this->user['korIme']     ?></h1>
+<h1 class="center">Ažuriraj prekrsaj <?php //echo $this->user['korIme']         ?></h1>
 <?php
 /* DODAT I SLIKE VEZANE I SVE OSTALO */
 $prekrsajDate = date("Y-m-d", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
@@ -9,6 +9,30 @@ $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
 <form id="forma3" name="details" class="form-horizontal" action="<?php echo URL ?>crud/prekrsaji/update/<?php echo $this->prekrsaj["id_prekrsaji"] ?>" method="POST" >
     <fieldset class="panel panel-default">
         <div class="panel-body">
+            <div class="form-group">
+                <label class="col-md-4 control-label"" for="oib">Prekršitelj</label>
+                <div class="col-md-5">
+                    <select id="oib" name="oib[]" class="form-control" multiple>
+                        <?php
+                        foreach ($this->korisniciPrekrsaja as $value)
+                            echo "<option selected value='{$value["oib"]}'>{$value["ime"]} {$value["prezime"]}</option>";
+                        ?>
+                    </select>
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label"" for="PrekrsiteljNovi">+</label>
+                <div class="col-md-5">
+                    <select id="PrekrsiteljNovi" name="PrekrsiteljNovi" class="form-control">
+                        <?php
+                        foreach ($this->korisnici as $value)
+                            echo "<option value='{$value["oib"]}'>{$value["ime"]} {$value["prezime"]}</option>";
+                        ?>
+                    </select>
+                    <span class="help-block">SREDIT OVO DA JE USER FRIENDLY sa (X) i (+)</span>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-md-4 control-label"" for="datum">Datum</label>
                 <div class="col-md-5">
@@ -121,3 +145,25 @@ $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
 
 <script src="<?php echo URL; ?>public/js/owl.carousel.min.js"></script>
 <script src="<?php echo URL; ?>public/js/slider.js"></script>
+<script>
+
+    jQuery("#PrekrsiteljNovi").mouseout(function(){
+        $('#PrekrsiteljNovi option').each(function() {
+            if ($(this).is(':selected')){
+                val=$(this).val();
+                text=$(this).text();
+                insert=true;
+                $('#oib option').each(function(){
+                    if($(this).val()==val)
+                        insert=false;
+                });
+                if(insert)
+                    $('#oib').append($("<option/>",{
+                        value: val,
+                        text: text
+                    }));
+            };
+        });
+    })
+
+</script>

@@ -29,6 +29,17 @@ $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
     <fieldset class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
+                <label class="col-md-4 control-label"" for="oib">Prekršitelj</label>
+                <div class="col-md-5">
+                    <select id="oib" name="oib[]" class="form-control" multiple readonly>
+                        <?php
+                        foreach ($this->korisniciPrekrsaja as $value)
+                            echo "<option value='{$value["oib"]}'>{$value["ime"]} {$value["prezime"]}</option>";
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-4 control-label"" for="datum">Datum</label>
                 <div class="col-md-5">
                     <input class="input-md form-control" disabled type="date" name="ime" id="ime" value="<?php echo $prekrsajDate; ?>" >

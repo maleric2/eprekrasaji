@@ -6,6 +6,17 @@
     <fieldset class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
+                <label class="col-md-4 control-label"" for="oib">Prekršitelj</label>
+                <div class="col-md-5">
+                    <select id="oib" name="oib[]" class="form-control" multiple>
+                        <?php
+                        foreach ($this->korisnici as $value)
+                            echo "<option value='{$value["oib"]}'>{$value["ime"]} {$value["prezime"]}</option>";
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-4 control-label"" for="datum">Datum</label>
                 <div class="col-md-5">
                     <input class="input-md form-control" type="date" autofocus name="datum" id="datum" >

@@ -53,7 +53,11 @@ class admin extends Controller {
 
         $this->view->advRender($pages);
     }
-
+    /*function testquery(){
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        $prekrsaji->query("SELECT * FROM ? WHERE oib=?", array("korisnici","12"));
+    }*/
     //action=null,change,delete,insert,details(view)
     function prekrsaji($action = NULL, $id = NULL) {
         require 'models/prekrsaji_model.php';
@@ -63,12 +67,15 @@ class admin extends Controller {
 
         $this->view->prekrsaji = $prekrsaji->getAllPrekrsaji();
         $this->view->policajci = $korisnici->getAllModUsers();
+        $this->view->korisnici = $korisnici->getAllUsersInfo();
         $this->view->kategorije = $prekrsaji->getAllActiveKategorije();
+        
 
         if ($action == "change") {
             foreach ($this->view->prekrsaji as $value) {
                 if ($id == $value["id_prekrsaji"]) {
                     $this->view->prekrsaj = $value;
+                    $this->view->korisniciPrekrsaja = $prekrsaji->getPrekrsajiUsers($id);
                     $this->view->datoteke = $prekrsaji->getDatoteke($id);
                 }
             }
@@ -79,6 +86,7 @@ class admin extends Controller {
             foreach ($this->view->prekrsaji as $value) {
                 if ($id == $value["id_prekrsaji"]) {
                     $this->view->prekrsaj = $value;
+                    $this->view->korisniciPrekrsaja = $prekrsaji->getPrekrsajiUsers($id);
                     $this->view->datoteke = $prekrsaji->getDatoteke($id);
                 }
             }

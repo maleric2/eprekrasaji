@@ -38,7 +38,7 @@
                         echo "<td>{$value['opis']}</td>";
                         echo "<td>{$vrijeme_zastare}</td>";
                         
-                        echo "<td><a href='./prekrsaji/details/{$value['korIme']}'>Details</a> </td>";
+                        echo "<td><a href='./prekrsaji/details/{$value['id_prekrsaji']}'>Details</a> </td>";
                         echo "<td><a href='".URL."crud/prekrsaji/delete/{$value['id_prekrsaji']}'>Obrisi</a> </td>";
                         echo "<td><a href='./prekrsaji/change/{$value['id_prekrsaji']}'>Promjeni</a> </td>";
                         echo "<td><a href='./slike/{$value['id_prekrsaji']}'>Dodaj slike</a> </td>";
