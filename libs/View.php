@@ -12,6 +12,7 @@ class View {
         }
         else{
             require 'views/header.php';
+            require 'views/container.php';
             require 'views/' . $name . '.php';
             require 'views/footer.php';
         }
@@ -22,7 +23,7 @@ class View {
        foreach ($name as $value) {
            require 'views/' . $value . '.php';
        }     
-       require 'views/footer.php';
+       //require 'views/footer.php';
         
     }
 }

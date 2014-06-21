@@ -36,8 +36,35 @@ class crud extends Controller {
 
         /*      CHANGE      */
         if ($action == "change") {
+            if (!$id)
+                return false;
             $prekrsaj = $this->getObject($_POST);
-            $prekrsaji->update($prekrsaj);
+            $prekrsaj->vrijeme_prekrsaja = $prekrsaj->datum . ' ' . $prekrsaj->vrijeme;
+            $prekrsaj->id_prekrsaji = $id;
+            //var_dump($prekrsaj);
+            $korisnik = array();
+            $brKorisnika = 0;
+            foreach ($prekrsaj->oib as $korisnikPrekrsaja) {
+                $korisnik[$brKorisnika] = new stdClass();
+                $korisnik[$brKorisnika]->oib = $korisnikPrekrsaja;
+
+                $dosje_id_dosje = $prekrsaji->query("SELECT ? from ? where oib = ?", array("dosje_id_dosje", "korisnici", $korisnik[$brKorisnika]->oib));
+                //print_r($korisnik[$brKorisnika]);
+                //print_r($dosje_id_dosje);
+                if (empty($dosje_id_dosje[0])) {
+                    $korisnik[$brKorisnika]->id_dosje = $prekrsaji->insertNewDosje($korisnik[$brKorisnika]);
+                } else
+                    $korisnik[$brKorisnika]->id_dosje = $dosje_id_dosje[0];
+                //print_r($korisnik[$brKorisnika]->id_dosje);
+                $brKorisnika++;
+            }
+            if (!$prekrsaji->update($prekrsaj))
+                header('location:' . URL . 'error');
+            /* PREKRSAJ ZA SVAKOG KORISNIKA */
+            foreach ($korisnik as $korisnikPrekrsaja) {
+                $korisnikPrekrsaja->id_prekrsaji = $prekrsaj->id_prekrsaji;
+                $prekrsaji->insertPrekrsajKorisnika($korisnikPrekrsaja);
+            }
             header('location:' . URL . 'admin/prekrsaji');
         } else if ($action == "delete") {
             if ($prekrsaji->delete($id))
@@ -51,19 +78,18 @@ class crud extends Controller {
             $prekrsaj = $this->getObject($_POST);
             $prekrsaj->vrijeme_prekrsaja = $prekrsaj->datum . ' ' . $prekrsaj->vrijeme;
             /* DOSJE */
-            $korisnik=array();
-            $brKorisnika=0;
-            foreach($prekrsaj->oib as $korisnikPrekrsaja){
-                $korisnik[$brKorisnika]=new stdClass();
-                $korisnik[$brKorisnika]->oib=$korisnikPrekrsaja;
-                $dosje_id_dosje=$prekrsaji->query("SELECT ? from ? where oib = ?", array("dosje_id_dosje", "korisnici", $korisnik[$brKorisnika]->oib));
+            $korisnik = array();
+            $brKorisnika = 0;
+            foreach ($prekrsaj->oib as $korisnikPrekrsaja) {
+                $korisnik[$brKorisnika] = new stdClass();
+                $korisnik[$brKorisnika]->oib = $korisnikPrekrsaja;
+                $dosje_id_dosje = $prekrsaji->query("SELECT ? from ? where oib = ?", array("dosje_id_dosje", "korisnici", $korisnik[$brKorisnika]->oib));
                 //print_r($korisnik[$brKorisnika]);
                 //print_r($dosje_id_dosje);
-                if(empty($dosje_id_dosje[0])){
-                    $korisnik[$brKorisnika]->id_dosje=$prekrsaji->insertNewDosje($korisnik[$brKorisnika]);
-                }
-                else
-                    $korisnik[$brKorisnika]->id_dosje=$dosje_id_dosje[0];
+                if (empty($dosje_id_dosje[0])) {
+                    $korisnik[$brKorisnika]->id_dosje = $prekrsaji->insertNewDosje($korisnik[$brKorisnika]);
+                } else
+                    $korisnik[$brKorisnika]->id_dosje = $dosje_id_dosje[0];
                 //print_r($korisnik[$brKorisnika]->id_dosje);
                 $brKorisnika++;
             }
@@ -93,13 +119,13 @@ class crud extends Controller {
                 }
             }
             $prekrsaj->id_prekrsaji = $prekrsaji->insert($prekrsaj);
-            
+
             /* PREKRSAJ ZA SVAKOG KORISNIKA */
-            foreach($korisnik as $korisnikPrekrsaja){
-                $korisnikPrekrsaja->id_prekrsaji=$prekrsaj->id_prekrsaji;
+            foreach ($korisnik as $korisnikPrekrsaja) {
+                $korisnikPrekrsaja->id_prekrsaji = $prekrsaj->id_prekrsaji;
                 $prekrsaji->insertPrekrsajKorisnika($korisnikPrekrsaja);
             }
-            
+
             if (!$prekrsaj->id_prekrsaji) {
                 header('location:' . URL . 'error');
             } else {
@@ -125,6 +151,7 @@ class crud extends Controller {
     function slike($action = NULL, $id_prekrsaj = NULL, $id_slike = NULL) {
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
+        if($id_prekrsaj==0)$id_prekrsaj=null;
         $prekrsaj->id_prekrsaji = $id_prekrsaj;
 
         if ($action == "insert") {
@@ -176,8 +203,6 @@ class crud extends Controller {
         return $datoteke;
     }
 
-    
-
     function reArrayFiles(&$file_post) {
 
         $file_ary = array();
@@ -191,6 +216,61 @@ class crud extends Controller {
         }
 
         return $file_ary;
+    }
+
+    /* RETURNS JSON */
+    /* preko ajax-a bez headera */
+
+    function uprave($action = null, $id = null) {
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        if ($action == "insert") {
+            $uprave = $this->getObject($_POST);
+            //var_dump($uprave);
+            $upit = $prekrsaji->query("INSERT INTO policijske_uprave SET naziv = ?, zupanije_id_zupanije = ? ", array($uprave->uprava, $uprave->zupanija));
+            $zupanije=$prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?",array($uprave->zupanija));
+            if ($upit)
+                print json_encode(array("uprava" => $uprave->uprava, "zupanija" => $zupanije['naziv'], "id_policijske_uprave" => $upit));
+        }
+        elseif ($action == "delete") {
+            if ($id){
+                $upit = $prekrsaji->query("DELETE FROM policijske_uprave WHERE id_policijske_uprave = ? ", array($id));
+                if($upit) echo 1;
+                
+            }
+        }
+        elseif ($action == "update") {
+            if ($id){
+                $uprave = $this->getObject($_POST);
+                $upit = $prekrsaji->query("UPDATE policijske_uprave SET naziv = ?, zupanije_id_zupanije = ?  WHERE id_policijske_uprave = ?", array($uprave->uprava, $uprave->zupanija, $id));
+                $zupanije=$prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?",array($uprave->zupanija));
+                if($upit) print json_encode(array("uprava" => $uprave->uprava, "zupanija" => $zupanije['naziv'], "id_policijske_uprave" => $id));
+            }
+        }
+    }
+    function zupanije($action = null, $id = null) {
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        if ($action == "insert") {
+            $zupanije = $this->getObject($_POST);
+            //var_dump($uprave);
+            $upit = $prekrsaji->query("INSERT INTO zupanije SET naziv = ?", array($zupanije->naziv));
+            if ($upit)
+                print json_encode(array("naziv" => $zupanije->naziv, "id_zupanije" => $upit));
+        }
+        elseif ($action == "delete") {
+            if ($id){
+                $upit = $prekrsaji->query("DELETE FROM zupanije WHERE id_zupanije = ? ", array($id));
+                if($upit) echo 1; 
+            }
+        }
+        elseif ($action == "update") {
+            if ($id){
+                $zupanije = $this->getObject($_POST);
+                $upit = $prekrsaji->query("UPDATE zupanije SET naziv = ?  WHERE id_zupanije = ?", array($zupanije->naziv, $id));
+                if($upit) print json_encode(array("naziv" => $zupanije->naziv, "id_zupanije" => $upit));
+            }
+        }
     }
 
 }

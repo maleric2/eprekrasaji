@@ -1,6 +1,6 @@
 <?php
-
-class Korisnici extends Controller {
+require 'upravljanje.php';
+class Korisnici extends Upravljanje {
 
     function __construct() {
         parent::__construct();
@@ -22,7 +22,7 @@ class Korisnici extends Controller {
         $this->view->render('crud/korisnici');
     }
 
-    function details($korIme) {
+    /*function details($korIme) {
 
         if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
             $this->view->user = $this->model->getUserInfo($korIme);
@@ -103,7 +103,7 @@ class Korisnici extends Controller {
                 header('location:' . URL . 'error');
         }
     }
-
+*/
     /* INSERT POJEDINACNE SLIKE (PROFILE PICTURE) */
 
     function insertSlikaInDir($files, $path) {

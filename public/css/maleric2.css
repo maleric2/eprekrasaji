@@ -8,6 +8,9 @@ and open the template in the editor.
     Author     : vjezbe4
 */
 
+html,body{
+    height: 100%
+}
 body{
     /*min-height: 2000px;*/
     /*padding-top: 70px;*/
@@ -16,7 +19,7 @@ body{
     font-size: 14px;
     background: #e1e3e4;
     /*background-image: url("../img/bg2.jpg");*/
-    
+
 }
 
 
@@ -28,7 +31,7 @@ a:visited{
 }
 
 .navbar-inverse{
-    background-color: #d9534f/*#e74c3c*/!important;
+    background-color: teal/*#d9534f/*#e74c3c*/!important;
     border: none!important;
 }
 .navbar-inverse .navbar-nav > li > a{
@@ -40,7 +43,7 @@ header{
     font-size: xx-large;
     color: #fff;
     display:block;
-    background-color: #d9534f/*#e74c3c*/;
+    background-color: teal/*#d9534f/*#e74c3c*/;
     background-repeat: no-repeat;
     height:60px;
     padding: 20px;
@@ -55,7 +58,7 @@ header{
     position: relative;
 }
 footer{
-    background-color: #d9534f/*#e74c3c*/;
+    background-color: teal/*#d9534f/*#e74c3c*/;
     border-top: 2px black solid;
     padding:10px;
     color:#eaeaea;
@@ -97,10 +100,9 @@ a:visited{
 }
 .form{
     background: #e1e3e4;
-}
+}/*
 #admin_content{
-    /*height:60vh;
-    overflow:scroll;*/
+
     min-height:340px; 
 }
 #admin_tools{
@@ -110,6 +112,10 @@ a:visited{
     bottom: 0;
     background-color: whitesmoke;
     left: 0;
+    margin-top: 100px;
+}
+#admin_tools ul{
+    max-width: 300px;
 }
 @media only screen and (max-width:998px){
     #admin_tools{
@@ -117,10 +123,7 @@ a:visited{
         background-color: transparent;
     }
 }
-.well{
-    margin-top:100px;
-}
-
+*/
 .avatar{
     width: 100px;height: 100px;
     margin: 10px auto 30px;
@@ -149,16 +152,16 @@ a:visited{
     cursor: pointer;
 }
 #gallery_sync2 .item h1{
-  font-size: 18px;
+    font-size: 18px;
 }
 
 #gallery_sync2 .item img{
-  width: auto;
-  height: 100px;
+    width: auto;
+    height: 100px;
 }
 #gallery_sync1 .item img{
-  width: auto;
-  height: 400px;
+    width: auto;
+    height: 400px;
 }
 .btnCustomOffset{
     margin-top:20px;
@@ -166,4 +169,193 @@ a:visited{
 .form-control[readonly]{
     cursor:default!important;
 }
+.checkbox-block label{
+    display: block!important;
+    padding: 5px;
+    background: #3276b1;
+    color: white;
+    border-radius: 5px;
+}
+.checkbox-block-no-border label{
+    display: block!important;
+    padding: 5px;
+    background: #3276b1;
+    color: white;
+    border-radius: 5px;
+}
+.checkbox-block-no-border a{
+    color:white;
+}
+.checkbox-block-no-border a:hover{
+    color:orange;
+}
+.checkbox-block-new label{
+    display: block!important;
+    padding: 5px;
+    background: #5cb85c;
+    color: white;
+    border-radius: 5px;
+}
+
+.checkbox-block label input, .checkbox-block-new input, .checkbox-block-no-border input{
+    display:none;
+    margin-left:-5px;
+}
+.checkbox-block label :hover,
+.checkbox-block-new label :hover{
+    border: white 1px solid !important;
+}
+.no-arrow{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+/* IKONE */
+.glyphicon-remove-me{
+    font-size:24px;
+    color:#d9534f!important;
+}
+.glyphicon-edit-me{
+    font-size:24px;
+    color:darkcyan!important;
+}
+.glyphicon-view-me{
+    font-size:24px;
+    color:steelblue!important;
+}
+.glyphicon-edit2-me{
+    font-size:20px;
+}
+.glyphicon-edit2-me:hover{
+    font-size:20px;
+    text-decoration: none;
+}
+
+/*    SIDEBAR && PANEL          */
+#wrapper {
+    padding-left: 220px;
+    transition: all 0.4s ease 0s;
+}
+
+#sidebar-wrapper {
+    margin-left: -220px;
+    left: 220px;
+    width: 220px;
+    background: darkslategray;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
+    /*margin-top:-8px; /*  PROMJENIVO AKO se ubaci nešto prije admin header-a*/
+}
+
+#page-content-wrapper {
+    width: 100%;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 220px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-nav li {
+    line-height: 40px;
+    text-indent: 20px;
+}
+
+.sidebar-nav li a {
+    color: #999999;
+    display: block;
+    text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    text-decoration: none;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    line-height: 60px;
+    font-size: 18px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+.content-header {
+    height: 65px;
+    line-height: 65px;
+}
+
+.content-header h1 {
+    margin: 0;
+    margin-left: 20px;
+    line-height: 65px;
+    display: inline-block;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.inset {
+    padding: 20px;
+}
+
+@media (max-width:767px) {
+
+    #wrapper {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        left: 0;
+    }
+
+    #wrapper.active {
+        position: relative;
+        left: 220px;
+    }
+
+    #wrapper.active #sidebar-wrapper {
+        left: 220px;
+        width: 220px;
+        transition: all 0.4s ease 0s;
+    }
+
+    #menu-toggle {
+        display: inline-block;
+    }
+
+    .inset {
+        padding: 15px;
+    }
+
+}
+
+/*              */
+
+
+
+
+
 

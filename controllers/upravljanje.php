@@ -1,28 +1,23 @@
 <?php
-require 'upravljanje.php';
-class admin extends Upravljanje {
-    public $nameOfFunction="admin";
+
+Abstract class Upravljanje extends Controller {
+
     function __construct() {
         parent::__construct();
         //redirekt automatski
-        /*Session::init();
+        Session::init();
         $logged = Session::get('loggedIn');
         $this->view->currentUser = Session::get('user');
         if ($logged == false) {
             Session::destroy();
             header('location:' . URL . '/login');
             exit;
-        }*/
-    }
-
-    function index() {
-        $pages = array('admin/header', 'admin/footer');
-        $this->view->advRender($pages);
+        }
     }
 
     //action=null,change,delete,insert,details(view)
     function korisnici($action = NULL, $korIme = NULL) {
-        require 'models/korisnici_model.php';
+        require_once 'models/korisnici_model.php';
         $korisnici = new Korisnici_Model();
         $this->view->korisnici = $korisnici->getAllUsersInfo();
         /* CHANGE*/
@@ -60,9 +55,9 @@ class admin extends Upravljanje {
     }*/
     //action=null,change,delete,insert,details(view)
     function prekrsaji($action = NULL, $id = NULL) {
-        require 'models/prekrsaji_model.php';
+        require_once 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
-        require 'models/korisnici_model.php';
+        require_once 'models/korisnici_model.php';
         $korisnici = new Korisnici_Model();
 
         $this->view->prekrsaji = $prekrsaji->getAllPrekrsaji();
@@ -97,17 +92,18 @@ class admin extends Upravljanje {
             header('location:' . URL . 'error');
         $this->view->advRender($pages);
     }
+    //function insertSlikaInDir($files, $path);
+    
     //id of prekrsaj
     function slike($id = NULL) {
-        require 'models/prekrsaji_model.php';
+        require_once 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
 
         if ($id == NULL) {
             $this->view->datoteke = $prekrsaji->getAllDatoteke();
             $pages = array('admin/header', 'crud/slike', 'admin/footer');
         }
-        /* ako je prosljedjen broj */ 
-        else if (is_numeric($id)) {
+        /* ako je prosljedjen broj */ else if (is_numeric($id)) {
             $this->view->datoteke = $prekrsaji->getDatoteke($id);
             $this->view->prekrsaj['id_prekrsaja'] = $id;
             $pages = array('admin/header', 'crud/slike', 'admin/footer');
@@ -116,4 +112,25 @@ class admin extends Upravljanje {
         $this->view->advRender($pages);
     }
     
+    function uprave($action=null, $id = NULL) {
+        require_once 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        
+        if($this->nameOfFunction=="admin") $pages = array('admin/header', 'crud/uprave', 'admin/footer');
+        else $pages = array('container','crud/uprave', 'footer');
+        
+        $this->view->uprave=$prekrsaji->query("SELECT p.id_policijske_uprave, p.naziv as uprava, z.naziv as zupanija FROM policijske_uprave p JOIN zupanije z ON p.zupanije_id_zupanije=z.id_zupanije");
+        $this->view->zupanije=$prekrsaji->query("SELECT * FROM zupanije");
+        $this->view->advRender($pages);
+    }
+    function zupanije($action=null, $id = NULL) {
+        require_once 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        
+        if($this->nameOfFunction=="admin") $pages = array('admin/header', 'crud/zupanije', 'admin/footer');
+        else $pages = array('container','crud/uprave', 'footer');
+
+        $this->view->zupanije=$prekrsaji->query("SELECT * FROM zupanije");
+        $this->view->advRender($pages);
+    }
 }

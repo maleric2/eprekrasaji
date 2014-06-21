@@ -33,28 +33,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a class="navbar-brand" href="#"><img style="margin-top: -8px" src="<?php echo URL; ?>/public/img/logo.png" alt="logo" height="38"></a>
+            <a class="navbar-brand" href="#"><img style="margin-top: -8px" src="<?php echo URL; ?>/public/img/logo.png" alt="logo" height="48"></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="<?php echo URL; ?>index">Home</a></li>
+            <li><a href="<?php echo URL; ?>index"><h4>Home</h4></a></li>
             <?php if(Session::get('loggedIn')==true):?>
-                <li><a href="<?php echo URL; ?>korisnici">Korisnici</a></li>
-                <li><a href="<?php echo URL; ?>prekrsaji">Moji Prekršaji</a></li>
-                <li><a href="<?php echo URL; ?>admin">Admin</a></li>
+            <li><a href="<?php echo URL; ?>korisnici"><h4>Korisnici</h4></a></li>
+                <li><a href="<?php echo URL; ?>prekrsaji"><h4>Moji Prekršaji</h4></a></li>
+                <li><a href="<?php echo URL; ?>prekrsaji/uprave"><h4>Uprave</h4></a></li>
+                <li><a href="<?php echo URL; ?>admin"><h4>Admin</h4></a></li>
             <?php endif; ?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <?php if(Session::get('loggedIn')==false):?>
@@ -89,12 +78,11 @@
     </header>
 
 
-    <section  class="container" id="pageContent">
-        <div>
-            <?php     
-            
+    
+            <?php/*     
+            <section  class="container" id="pageContent">
             $cookie=isset($_COOKIE['user']);
             if (empty($cookie)) echo "Dobrodosli";
-                else echo "Dobrodosao ".$cookie;?>
-        </div>
+                else echo "Dobrodosao ".$cookie;*/?>
+
 	

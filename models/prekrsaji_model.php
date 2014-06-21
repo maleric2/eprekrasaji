@@ -29,6 +29,7 @@ class Prekrsaji_Model extends Model {
         $data = $sth->fetchAll();
         return $data;
     }
+
     public function getPrekrsajiUsers($prekrsaj) {
         $sth = $this->db->prepare("SELECT * FROM korisnici k "
                 . "JOIN dosje d ON k.dosje_id_dosje=d.id_dosje "
@@ -40,6 +41,7 @@ class Prekrsaji_Model extends Model {
         $data = $sth->fetchAll();
         return $data;
     }
+
     /* Sredit unos, oib ispisat ime prezime a oib je value */
     /* POLICAJAC OIB POLICAJAC, veze se preko */
 
@@ -52,6 +54,39 @@ class Prekrsaji_Model extends Model {
                 . " :vrijeme_zastare, :oib_policajca )");
         $send = $sth->execute(array(
             ':id' => "DEFAULT",
+            ':vrijeme' => $item->vrijeme_prekrsaja,
+            ':id_kategorija' => $item->id_kategorije_prekrsaja,
+            ':mjesto' => $item->mjesto,
+            ':opis' => $item->opis,
+            ':vrijeme_zastare' => $item->vrijeme_zastare,
+            ':oib_policajca' => $item->policajac_oib_policajac
+        ));
+        //print_r($sth->errorInfo());
+        /* napravit funkciju koja senda u logove unutar Model */
+        if ($send) {
+            $sth = $this->db->prepare("INSERT INTO tipOstaleRadnje VALUES "
+                    . "(:id, :time, :radnja, :oib)");
+            $send = $sth->execute(array(
+                ':id' => "default",
+                ':time' => "now()",
+                ':radnja' => "registracija",
+                ':oib' => $item->oib
+            ));
+
+            $last_id = $this->db->lastInsertId();
+            return $last_id;
+        } else {
+            return false;
+        }
+    }
+
+    public function update($item) {
+        $sth = $this->db->prepare("UPDATE prekrsaji SET"
+                . " vrijeme_prekrsaja=:vrijeme, id_kategorije_prekrsaja=:id_kategorija, mjesto=:mjesto, opis=:opis,"
+                . " vrijeme_zastare=:vrijeme_zastare, policajac_oib_policajac=:oib_policajca"
+                . " WHERE id_prekrsaji=:id");
+        $send = $sth->execute(array(
+            ':id' => $item->id_prekrsaji,
             ':vrijeme' => $item->vrijeme_prekrsaja,
             ':id_kategorija' => $item->id_kategorije_prekrsaja,
             ':mjesto' => $item->mjesto,
@@ -208,10 +243,10 @@ class Prekrsaji_Model extends Model {
             ':dosje' => "DEFAULT"
         ));
         $item->id_dosje = $this->db->lastInsertId();
-        /*print_r($item->oib);
-        echo "   ";
-        print_r($item->id_dosje);
-        echo "<br>";*/
+        /* print_r($item->oib);
+          echo "   ";
+          print_r($item->id_dosje);
+          echo "<br>"; */
         /* napravit funkciju koja senda u logove unutar Model */
         if ($send) {
             $sth = $this->db->prepare("UPDATE korisnici SET "
@@ -220,59 +255,17 @@ class Prekrsaji_Model extends Model {
                 ':dosje' => $item->id_dosje,
                 ':oib' => $item->oib
             ));
-            /*print_r($item->oib);
-            echo "   ";
-            print_r($item->id_dosje);
-            echo "<br>";
-            print_r($sth->errorInfo());*/
+            /* print_r($item->oib);
+              echo "   ";
+              print_r($item->id_dosje);
+              echo "<br>";
+              print_r($sth->errorInfo()); */
             return $item->id_dosje;
         } else {
             return false;
         }
     }
 
-    public function query($queryString, $param = NULL, $formatValue = true) {
-        if ($param != NULL) {
-            foreach ($param as $value) {
-                $limit = 1;
-                $queryString = preg_replace("/\?/", $value, $queryString, $limit);
-            }
-        }
-        //echo $queryString;
-
-        $sth = $this->db->prepare($queryString);
-        $send = $sth->execute();
-        //print_r($sth->errorInfo());
-        //print_r (strpos($queryString, "SELECT"));
-
-        if (strpos($queryString, "SELECT") !== false) {
-            $data = $sth->fetchAll();
-            if (count($data) > 1)
-                return $data;
-            elseif (count($data) == 1 && $formatValue) {
-                return $data[0];
-            } else
-                return false;
-        }
-        elseif (strpos($queryString, "INSERT") !== false) {
-            if ($send)
-                return $this->db->lastInsertId();
-            else
-                return false;
-        }
-        elseif (strpos($queryString, "UPDATE") !== false) {
-            if ($send)
-                return true;
-            else
-                return false;
-        }
-        elseif (strpos($queryString, "DELETE") !== false) {
-            if ($send)
-                return true;
-            else
-                return false;
-        } else
-            return false;
-    }
+    
 
 }

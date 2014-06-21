@@ -1,8 +1,9 @@
-<h1 class="center">Ažuriraj prekrsaj <?php //echo $this->user['korIme']  ?></h1>
+<h1 class="center">Detalji prekrsaja <?php //echo $this->user['korIme']  ?></h1>
 <?php
 /* DODAT I SLIKE VEZANE I SVE OSTALO */
 $prekrsajDate = date("Y-m-d", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
 $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
+$prekrsajZastaraDate = date("Y-m-d", strtotime($this->prekrsaj['vrijeme_zastare']));
 ?>
 <script src="<?php echo URL; ?>public/js/slider.js"></script>
 
@@ -29,16 +30,17 @@ $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
     <fieldset class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
-                <label class="col-md-4 control-label"" for="oib">Prekršitelj</label>
-                <div class="col-md-5">
-                    <select id="oib" name="oib[]" class="form-control" multiple readonly>
-                        <?php
-                        foreach ($this->korisniciPrekrsaja as $value)
-                            echo "<option value='{$value["oib"]}'>{$value["ime"]} {$value["prezime"]}</option>";
-                        ?>
-                    </select>
+                <label class="col-md-4 control-label" for="oib">Prekršitelj</label>
+                <div class="col-md-5" id="PrekrsiteljiCbox">
+                    <?php  foreach ($this->korisniciPrekrsaja as $value)
+                      echo "<div class='checkbox checkbox-block-no-border'><label for='checkboxes-0'>"
+                        . "<input type='checkbox' checked name='oib[]' value='{$value["oib"]}'>"
+                        . "{$value["ime"]} {$value["prezime"]}"
+                        . '<a href="'.URL.'korisnici/'.$value["oib"].'"><span class="glyphicon glyphicon-list-alt pull-right"></span></a>'
+                                . '</label></div>';
+                      ?>
                 </div>
-            </div>
+                </div>
             <div class="form-group">
                 <label class="col-md-4 control-label"" for="datum">Datum</label>
                 <div class="col-md-5">
@@ -66,7 +68,7 @@ $prekrsajTime = date("H:i:s", strtotime($this->prekrsaj['vrijeme_prekrsaja']));
             <div class="form-group">
                 <label class="col-md-4 control-label" for="vrijeme_zastare">Vrijeme zastare</label>
                 <div class="col-md-5">
-                    <input class="form-control"  disabled type="datetime" id="vrijeme_zastare" name="vrijeme_zastare" value="<?php echo $this->prekrsaj['vrijeme_zastare']; ?>">
+                    <input class="form-control"  disabled type="date" id="vrijeme_zastare" name="vrijeme_zastare" value="<?php echo $prekrsajZastaraDate ?>">
                 </div>
             </div>
             <!-- Select Basic -->

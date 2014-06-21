@@ -1,7 +1,7 @@
 <?php
-
-class Prekrsaji extends Controller {
-
+require 'upravljanje.php';
+class Prekrsaji extends Upravljanje {
+    public $nameOfFunction="prekrsaji";
     function __construct() {
         parent::__construct();
 
@@ -24,7 +24,7 @@ class Prekrsaji extends Controller {
         $this->view->render('crud/prekrsaji');
     }
 
-    function details($korIme) {
+    /*function details($korIme) {
 
         if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
             $this->view->user = $this->model->getUserInfo($korIme);
@@ -96,7 +96,7 @@ class Prekrsaji extends Controller {
             else
                 header('location:' . URL . 'error');
         }
-    }
+    }*/
 
     /* INSERT POJEDINACNE SLIKE (PROFILE PICTURE) */
     function insertSlikaInDir($files, $path) {

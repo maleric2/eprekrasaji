@@ -1,5 +1,4 @@
 </section>
-
 <footer id="podnozje">
     <section class="container">
         <address id="kontakt">

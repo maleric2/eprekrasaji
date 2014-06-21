@@ -2,6 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/xampp/htdocs/Projekt/controllers/admin.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/crud/korisnici.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/crud/uprave.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/register/index.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/public/js/ajax.Uprave.js</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/crud/prekrsaji_details.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/crud/prekrsaji.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/controllers/upravljanje.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/controllers/prekrsaji.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/views/crud/prekrsaji_change.php</file>
+            <file>file:/D:/xampp/htdocs/Projekt/public/css/maleric2.css</file>
+            <file>file:/D:/xampp/htdocs/Projekt/controllers/crud.php</file>
+        </group>
     </open-files>
 </project-private>

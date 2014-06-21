@@ -33,12 +33,12 @@ jQuery(function() {
           data: $('#register_form').serialize(),
           success:function(result){
             korime=$("#korime").val();
-            //2. when data will arrive this method is executed with data in result argument.
+
             console.log(result);
             data = jQuery.parseJSON(result);
             if(result==true) console.log("TRUE");
             else console.log("FALSE");
-            //do what ever with data.
+
             jQuery("#register_form").fadeOut();
             jQuery("#register_form2").fadeIn();
             $("html, body").animate({ scrollTop: $('header').offset().top }, 1000);

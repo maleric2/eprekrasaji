@@ -13,8 +13,7 @@
         <tr><th>Ime</th><th>Slika</th>
             <th>Prezime</th><th>Adresa</th>
             <th>E-mail</th><th>Korisnicko ime</th>
-            <th>Detalji</th>
-            <th>Obriši</th><th>Promjena</th>
+            <th colspan="3"> Operacije </th>
         </tr>
         
         <?php
@@ -33,9 +32,9 @@
                         echo "<td>{$value['adresa']}</td>";
                         echo "<td>{$value['email']}</td>";
                         echo "<td>{$value['korIme']}</td>";
-                        echo "<td><a href='".URL."korisnici/details/{$value['korIme']}'>Details</a></td>";
-                        echo "<td><a href='./korisnici/delete/{$value['korIme']}'>Obrisi</a></td>";
-                        echo "<td><a href='".URL."admin/korisnici/change/{$value['korIme']}'>Promjeni</a></td>";
+                        echo "<td><a class='glyphicon-view-me' href='".URL."korisnici/details/{$value['korIme']}'><i class='glyphicon glyphicon-list-alt'></i></a></td>";
+                        echo "<td><a class='glyphicon-remove-me' href='./korisnici/delete/{$value['korIme']}'><i class='glyphicon glyphicon-remove'></i></a></td>";
+                        echo "<td><a class='glyphicon-edit-me' href='".URL."admin/korisnici/change/{$value['korIme']}'><i class='glyphicon glyphicon-edit'></i></a></td>";
                         echo"</tr>";
                     }
                 }
