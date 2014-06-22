@@ -20,12 +20,59 @@ class crud extends Controller {
         $this->view->advRender($pages);
     }
 
-    function korisnici() {
+    function korisnici($action = NULL, $id = NULL) {
         require 'models/korisnici_model.php';
         $korisnici = new Korisnici_Model();
         $this->view->korisnici = $korisnici->getAllUsersInfo();
+
+        if ($action == "update") {
+
+            require 'controllers/korisnici.php';
+            $korisnici_controller = new Korisnici();
+            $user = $this->getObject($_POST);
+            //var_dump($user);
+
+            if ($korisnici_controller->validation($user, 2)) {
+                require 'models/prekrsaji_model.php';
+                $prekrsaji = new Prekrsaji_Model();
+
+                $userOld = $korisnici->getUserInfo($user->korime);
+                if (isset($_FILES['picture']) && $_FILES['picture']['error'] == 0) {
+                    if ($userOld["id_profilna_slika"]) {
+                        $prekrsaji->deleteDatoteke($userOld["id_profilna_slika"]);
+                    }
+                    $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
+                    $user->id_profilna_slika = $prekrsaji->insertDatoteke($datoteka);
+                } else {
+                    $user->id_profilna_slika  = $userOld["id_profilna_slika"];
+                }
+                //var_dump($user->id_profilna_slika);
+                if ($korisnici->updateUser($user))
+                    header('location:' . URL . 'admin/korisnici');
+                else
+                    header('location:' . URL . 'error');
+            }
+        }
+        elseif ($action = "delete") {
+
+            if ($id)
+                if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+                    if ($korisnici->query("UPDATE korisnici SET id_statusRacuna = 1, obrisan = 1 where oib = ?", array($id)))
+                        header('location:' . URL . 'korisnici');
+                    else {
+                        if ($this->view->currentUser["korIme"] === $id)
+                            header('location:' . URL . 'login/logout');
+                        else
+                            header('location:' . URL . 'error/other/3');
+                    }
+                } else
+                    header('location:' . URL . 'error/other/3');
+            else
+                header('location:' . URL . 'error/other/1');
+        }
+
         //$this->view->render('korisnici/index');
-        $pages = array('admin/header', 'korisnici/index', 'admin/footer');
+        $pages = array('admin/header', 'crud/korisnici', 'admin/footer');
         $this->view->advRender($pages);
     }
 
@@ -151,7 +198,8 @@ class crud extends Controller {
     function slike($action = NULL, $id_prekrsaj = NULL, $id_slike = NULL) {
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
-        if($id_prekrsaj==0)$id_prekrsaj=null;
+        if ($id_prekrsaj == 0)
+            $id_prekrsaj = null;
         $prekrsaj->id_prekrsaji = $id_prekrsaj;
 
         if ($action == "insert") {
@@ -203,6 +251,30 @@ class crud extends Controller {
         return $datoteke;
     }
 
+    /* INSERT POJEDINACNE SLIKE (PROFILE PICTURE) */
+
+    function insertSlikaInDir($files, $path) {
+        $allowed = array('png', 'jpg', 'gif', 'zip');
+        $datoteka = new stdClass();
+        $datoteka->naziv = NULL;
+        $datoteka->putanja = NULL;
+        if (isset($files['picture']) && $files['picture']['error'] == 0) {
+            $extension = pathinfo($files['picture']['name'], PATHINFO_EXTENSION);
+            $datoteka->naziv = $files['picture']['name'];
+
+            if (!in_array(strtolower($extension), $allowed)) {
+                header('location:' . URL . 'error');
+            }
+            if (!file_exists('public/img/' . $path)) {
+                mkdir('public/img/' . $path, 0777, true);
+            }
+            if (move_uploaded_file($files['picture']['tmp_name'], 'public/img/' . $path . '/' . $files['picture']['name'])) {
+                $datoteka->putanja = 'public/img/' . $path . '/' . $files['picture']['name'];
+            }
+        }
+        return $datoteka;
+    }
+
     function reArrayFiles(&$file_post) {
 
         $file_ary = array();
@@ -228,26 +300,28 @@ class crud extends Controller {
             $uprave = $this->getObject($_POST);
             //var_dump($uprave);
             $upit = $prekrsaji->query("INSERT INTO policijske_uprave SET naziv = ?, zupanije_id_zupanije = ? ", array($uprave->uprava, $uprave->zupanija));
-            $zupanije=$prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?",array($uprave->zupanija));
+            $zupanije = $prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?", array($uprave->zupanija));
             if ($upit)
                 print json_encode(array("uprava" => $uprave->uprava, "zupanija" => $zupanije['naziv'], "id_policijske_uprave" => $upit));
         }
         elseif ($action == "delete") {
-            if ($id){
+            if ($id) {
                 $upit = $prekrsaji->query("DELETE FROM policijske_uprave WHERE id_policijske_uprave = ? ", array($id));
-                if($upit) echo 1;
-                
+                if ($upit)
+                    echo 1;
             }
         }
         elseif ($action == "update") {
-            if ($id){
+            if ($id) {
                 $uprave = $this->getObject($_POST);
                 $upit = $prekrsaji->query("UPDATE policijske_uprave SET naziv = ?, zupanije_id_zupanije = ?  WHERE id_policijske_uprave = ?", array($uprave->uprava, $uprave->zupanija, $id));
-                $zupanije=$prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?",array($uprave->zupanija));
-                if($upit) print json_encode(array("uprava" => $uprave->uprava, "zupanija" => $zupanije['naziv'], "id_policijske_uprave" => $id));
+                $zupanije = $prekrsaji->query("SELECT * FROM zupanije where id_zupanije = ?", array($uprave->zupanija));
+                if ($upit)
+                    print json_encode(array("uprava" => $uprave->uprava, "zupanija" => $zupanije['naziv'], "id_policijske_uprave" => $id));
             }
         }
     }
+
     function zupanije($action = null, $id = null) {
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();
@@ -259,17 +333,62 @@ class crud extends Controller {
                 print json_encode(array("naziv" => $zupanije->naziv, "id_zupanije" => $upit));
         }
         elseif ($action == "delete") {
-            if ($id){
+            if ($id) {
                 $upit = $prekrsaji->query("DELETE FROM zupanije WHERE id_zupanije = ? ", array($id));
-                if($upit) echo 1; 
+                if ($upit)
+                    echo 1;
             }
         }
         elseif ($action == "update") {
-            if ($id){
+            if ($id) {
                 $zupanije = $this->getObject($_POST);
                 $upit = $prekrsaji->query("UPDATE zupanije SET naziv = ?  WHERE id_zupanije = ?", array($zupanije->naziv, $id));
-                if($upit) print json_encode(array("naziv" => $zupanije->naziv, "id_zupanije" => $upit));
+                if ($upit)
+                    print json_encode(array("naziv" => $zupanije->naziv, "id_zupanije" => $upit));
             }
+        }
+    }
+
+    function zalbe($action = null, $id = null) {
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        if ($action == "insert") {
+            $zalba = $this->getObject($_POST);
+            //var_dump($uprave);
+            $upit = $prekrsaji->query("INSERT INTO zalbe SET naziv = ?, opis = ?, id_prekrsaji = ?", array($zalba->naziv, $zalba->opis, $zalba->id_prekrsaji));
+            if ($upit)
+                header('location:' . URL . 'korisnici/zalbe');
+            else
+                header('location:' . URL . 'error');
+        }
+        elseif ($action == "delete") {
+            $upit = $prekrsaji->query("DELETE FROM zalbe where id_zalbe = ?", array($id));
+            if ($upit)
+                header('location:' . URL . 'korisnici/zalbe');
+            else
+                header('location:' . URL . 'error');
+        }
+        elseif ($action == "update") {
+            $zalba = $this->getObject($_POST);
+            $upit = $prekrsaji->query("UPDATE zalbe SET naziv = ?, opis = ?, id_prekrsaji = ? WHERE id_zalbe = ? ", array($zalba->naziv, $zalba->opis, $zalba->id_prekrsaji, $id));
+            if ($upit)
+                header('location:' . URL . 'korisnici/zalbe');
+            else
+                header('location:' . URL . 'error');
+        }
+    }
+
+    function policajci($action = null, $id = null) {
+        require 'models/prekrsaji_model.php';
+        $prekrsaji = new Prekrsaji_Model();
+        if ($action == "policajac") {
+            $policajac = $this->getObject($_POST);
+            //var_dump($uprave);
+            $upit = $prekrsaji->query("UPDATE korisnici SET id_tipKorisnika = 2 WHERE oib = ?", array($policajac->oib));
+            if ($upit)
+                header('location:' . URL . 'admin/policajci');
+            else
+                header('location:' . URL . 'error');
         }
     }
 

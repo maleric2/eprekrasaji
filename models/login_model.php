@@ -22,9 +22,13 @@ class Login_Model extends Model {
             if($data[0]['obrisan']) header('location:' . URL .'error/login/1');
             else {
                 Session::init();
+                $id_sesija=$this->insertInSession(array("korisnik"=>$data[0]['oib']));
+                $data[0]['id_sesija']=$id_sesija;
                 Session::set('user', $data[0]);
                 Session::set('loggedIn', true);
                 setcookie("user", $data[0]['korIme'], time()+3600,"/");
+                $this->insertInLog(array("tip"=>1, "radnja"=>"prijava","korisnik"=>$data[0]['oib']));
+                
                 header('location:' . URL .'korisnici');
             }
         }else{

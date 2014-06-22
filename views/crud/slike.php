@@ -8,7 +8,7 @@
         ?>
     </h2>
     <h1> Popis slika</h1>
-
+    <?php if($this->prekrsaj['id_prekrsaja']):?>
     <div id="putImage" class="blockquote-reverse">
     </div>
     <br>
@@ -30,14 +30,14 @@
             </form>
         </div>
     </div>
-
+    <?php endif;?>
     <table class="table table-striped">
-        <tr><th>Slika</th>
+        <thead><tr><th>Slika</th>
             <th>Naziv</th>
             <th>Putanja</th>
             <th>Obriši</th>
-        </tr>
-
+            </tr></thead>
+        <tbody>
         <?php
         //$distinctValues[] = array(); 
         $brojac = 0;
@@ -62,6 +62,7 @@
         if ($brojac == 0)
             echo "<tr ><td colspan=4>Nema slika</td></tr>";
         ?>
+            </tbody>
     </table>
     <br>
 </article>

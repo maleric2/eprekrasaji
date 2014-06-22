@@ -22,6 +22,18 @@
                 </div>
             </div>
             <?php endif; ?>
+            <div class="form-group has-success">
+                <label class="col-md-4 control-label" for="id_tipKorisnika">Tip Korisnika</label>
+                <div class="col-md-5">
+                    <select class="form-control no-arrow" disabled id="id_tipKorisnika" name="id_tipKorisnika" readonly>
+                        <?php
+                        foreach ($this->tipKorisnika as $value)
+                            if ($value['id_tipKorisnika']==$this->user['id_tipKorisnika'])
+                                echo "<option selected value='{$value['id_tipKorisnika']}' >{$value['naziv']}</option>";
+                        ?>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ime">Ime</label>
                 <div class="col-md-5">

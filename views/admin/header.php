@@ -12,11 +12,12 @@
             </li>
             <li><a href="#">Overview</a>
             </li>
-            <li ><a href="<?php echo URL; ?>admin/korisnici"><i class="icon-user"></i> Korisnici</a></li>
+            <li ><a href="<?php echo URL; ?>admin/korisnici"><i class="glyphicon glyphicon-user"></i> Korisnici</a></li>
             <li ><a href="<?php echo URL; ?>admin/prekrsaji"><i class="icon-user"></i> Prekršaji</a></li>
+            <li ><a href="<?php echo URL; ?>admin/zalbe"><i class="icon-user"></i> Žalbe</a></li>
             <li ><a href="<?php echo URL; ?>admin/slike"><i class="icon-user"></i> Slike</a></li>
-            <li ><a href="<?php echo URL; ?>admin/uprave"><i class="icon-user"></i> Policijske Uprave</a></li>
-            <li ><a href="<?php echo URL; ?>admin/zupanije"><i class="icon-user"></i> Županije</a></li>
+            <li ><a href="<?php echo URL; ?>admin/uprave"><i class="glyphicon glyphicon-bookmark"></i> Policijske Uprave</a></li>
+            <li ><a href="<?php echo URL; ?>admin/zupanije">Županije</a></li>
         </ul>
     </div>
     <!--<div class="col-xs-10 col-md-2 ">

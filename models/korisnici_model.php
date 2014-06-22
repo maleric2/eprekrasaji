@@ -103,19 +103,9 @@ class Korisnici_Model extends Model {
                 ));
         //print_r($sth->errorInfo());
         if ($send) {
-            $sth = $this->db->prepare("INSERT INTO tipOstaleRadnje VALUES "
-                    . "(:id, :time, :radnja, :oib)");
-            $send = $sth->execute(array(
-                ':id' => "default",
-                ':time' => "now()",
-                ':radnja' => "azuriranje",
-                ':oib' => $item->oib
-            ));
-        
-            /*header('location:' . URL . 'korisnici');*/
+             $this->insertInLog(array("tip"=>2, "upit"=>"UPDATE korisnici"));
             return true;
         } else {
-           /* header('location:' . URL . 'error/1');*/
             return false;
         }
     }

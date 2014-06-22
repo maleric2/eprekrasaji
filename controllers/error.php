@@ -36,6 +36,7 @@ class Error extends Controller{
             $this->view->details = 'Neispravno unesena capatcha';
             $this->view->more = 'Vratite se natrag i ispravno unesite slova i brojeve sa slike';
         }
+        
         $this->view->render('error/index');
     }
     function other($id) {
@@ -50,6 +51,12 @@ class Error extends Controller{
         }
         elseif ($id == 3) {
             $this->view->details = 'Nemate ovlasti za izvrsavanje trazene funkcije';
+        }
+        
+        
+        elseif ($id == 7) {
+            $this->view->details = 'Neispravan korisnik ili korisničko ime';
+            $this->view->more = 'Nepostojeći podatak ili korisnik sa neispravnim korisničkim imenom';
         }
         $this->view->render('error/index');
     }

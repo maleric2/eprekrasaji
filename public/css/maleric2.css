@@ -23,10 +23,10 @@ body{
 }
 
 
-a:link{
+a:link :not(.btn){
     color: #3498DB;
 }
-a:visited{
+a:visited :not(.btn):not(a h4){
     color:goldenrod;
 }
 
@@ -91,12 +91,6 @@ section{
     display: inline-block;
     margin-left:auto;
     margin-right:auto;
-}
-a:link{
-    color: #3498DB;
-}
-a:visited{
-    color:goldenrod;
 }
 .form{
     background: #e1e3e4;

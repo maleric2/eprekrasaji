@@ -30,16 +30,11 @@
                             }
                             ?>
                         </select>
-                        <span class = "help-block">Odaberi županiju sa popisa ili <a href="./zupanije">dodaj novu</a></span>
+                        <span class = "help-block">Odaberi korisnika sa popisa</span>
                     </div>
-                    <div class = "col-md-4">
-                        <label class = "control-label" for = "uprava">Nova Policijska Uprava</label>
-                        <input id = "uprava" type = "text" class = "form-control" name = "uprava" />
-                        <span class = "help-block">Naziv nove policijske uprave</span>
-                    </div>
-                    <div class = "col-md-4">
+                    <div class = "col-md-4 col-md-offset-4">
                         <label class = "control-label"></label>
-                        <button id = "insertBtn" name = "insert" class = "btn btn-primary btn-block form-control">Dodaj upravu</button>
+                        <button id = "insertBtn" name = "insert" class = "btn btn-primary btn-block form-control">Dodaj Policajca</button>
                     </div>
                 </div>
             </div>

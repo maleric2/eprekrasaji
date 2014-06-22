@@ -1,5 +1,7 @@
 <?php
+
 require 'upravljanje.php';
+
 class Korisnici extends Upravljanje {
 
     function __construct() {
@@ -22,110 +24,150 @@ class Korisnici extends Upravljanje {
         $this->view->render('crud/korisnici');
     }
 
-    /*function details($korIme) {
+    /* function details($korIme) {
 
-        if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
-            $this->view->user = $this->model->getUserInfo($korIme);
-            $this->view->render('crud/korisnici_details');
-        } else {
-            header('location:' . URL . 'error/other/2');
-        }
-    }
+      if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
+      $this->view->user = $this->model->getUserInfo($korIme);
+      $this->view->render('crud/korisnici_details');
+      } else {
+      header('location:' . URL . 'error/other/2');
+      }
+      }
 
-    function change($korIme) {
+      function change($korIme) {
 
-        if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
-            $this->view->user = $this->model->getUserInfo($korIme);
-            $this->view->render('crud/korisnici_change');
-        } else {
-            header('location:' . URL . 'error/other/2');
-        }
-    }
+      if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
+      $this->view->user = $this->model->getUserInfo($korIme);
+      $this->view->render('crud/korisnici_change');
+      } else {
+      header('location:' . URL . 'error/other/2');
+      }
+      }
 
-    //Activate from korisnici
-    function activate($korIme) {
+      //Activate from korisnici
+      function activate($korIme) {
 
-        if ($this->view->currentUser["id_tipKorisnika"] > 1) {
-            $this->userToActivate = $this->model->getUserInfo($korIme);
-            $this->userToActivate['id_statusRacuna'] = 2;
-            $this->userToActivate['obrisan'] = 0;
-            $user = $this->getObject($this->userToActivate);
-            if ($this->model->updateUser($user))
-                header('location:' . URL . 'korisnici');
-            else
-                header('location:' . URL . 'error/other/3');
-        } else {
-            header('location:' . URL . 'error/other/3');
-        }
-    }
+      if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+      $this->userToActivate = $this->model->getUserInfo($korIme);
+      $this->userToActivate['id_statusRacuna'] = 2;
+      $this->userToActivate['obrisan'] = 0;
+      $user = $this->getObject($this->userToActivate);
+      if ($this->model->updateUser($user))
+      header('location:' . URL . 'korisnici');
+      else
+      header('location:' . URL . 'error/other/3');
+      } else {
+      header('location:' . URL . 'error/other/3');
+      }
+      }
 
-    function delete($korIme) {
+      function delete($korIme) {
 
-        if ($this->view->currentUser["id_tipKorisnika"] > 1) {
-            $this->userToDelete = $this->model->getUserInfo($korIme);
-            $this->userToDelete['id_statusRacuna'] = 1;
-            $this->userToDelete['obrisan'] = 1;
-            $user = $this->getObject($this->userToDelete);
-            if ($this->model->updateUser($user))
-                header('location:' . URL . 'korisnici');
-            else {
-                if ($this->view->currentUser["korIme"] === $korIme)
-                    header('location:' . URL . 'login/logout');
-                else
-                    header('location:' . URL . 'error/other/3');
-            }
-        }
-        else {
-            header('location:' . URL . 'error/other/3');
-        }
-    }
+      if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+      $this->userToDelete = $this->model->getUserInfo($korIme);
+      $this->userToDelete['id_statusRacuna'] = 1;
+      $this->userToDelete['obrisan'] = 1;
+      $user = $this->getObject($this->userToDelete);
+      if ($this->model->updateUser($user))
+      header('location:' . URL . 'korisnici');
+      else {
+      if ($this->view->currentUser["korIme"] === $korIme)
+      header('location:' . URL . 'login/logout');
+      else
+      header('location:' . URL . 'error/other/3');
+      }
+      }
+      else {
+      header('location:' . URL . 'error/other/3');
+      }
+      }
 
-    function update() {
+      function update() {
 
-        $user = $this->getObject($_POST);
-        //var_dump($user);
+      $user = $this->getObject($_POST);
+      //var_dump($user);
 
-        if ($this->validation($user, 2)) {
-            require 'models/prekrsaji_model.php';
-            $prekrsaji = new Prekrsaji_Model();
-            $userOld = $this->model->getUserInfo($user->korime);
-            if ($userOld["id_profilna_slika"]) {
-                $prekrsaji->deleteDatoteke($userOld["id_profilna_slika"]);
-            }
+      if ($this->validation($user, 2)) {
+      require 'models/prekrsaji_model.php';
+      $prekrsaji = new Prekrsaji_Model();
+      $userOld = $this->model->getUserInfo($user->korime);
+      if ($userOld["id_profilna_slika"]) {
+      $prekrsaji->deleteDatoteke($userOld["id_profilna_slika"]);
+      }
 
-            $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
+      $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
 
-            $user->id_profilna_slika = $prekrsaji->insertDatoteke($datoteka);
-            //var_dump($user->id_profilna_slika);
-            if ($this->model->updateUser($user))
-                header('location:' . URL . 'admin/korisnici');
-            else
-                header('location:' . URL . 'error');
-        }
-    }
-*/
+      $user->id_profilna_slika = $prekrsaji->insertDatoteke($datoteka);
+      //var_dump($user->id_profilna_slika);
+      if ($this->model->updateUser($user))
+      header('location:' . URL . 'admin/korisnici');
+      else
+      header('location:' . URL . 'error');
+      }
+      }
+     */
     /* INSERT POJEDINACNE SLIKE (PROFILE PICTURE) */
 
-    function insertSlikaInDir($files, $path) {
-        $allowed = array('png', 'jpg', 'gif', 'zip');
-        $datoteka = new stdClass();
-        $datoteka->naziv = NULL;
-        $datoteka->putanja = NULL;
-        if (isset($files['picture']) && $files['picture']['error'] == 0) {
-            $extension = pathinfo($files['picture']['name'], PATHINFO_EXTENSION);
-            $datoteka->naziv = $files['picture']['name'];
+    /*    function insertSlikaInDir($files, $path) {
+      $allowed = array('png', 'jpg', 'gif', 'zip');
+      $datoteka = new stdClass();
+      $datoteka->naziv = NULL;
+      $datoteka->putanja = NULL;
+      if (isset($files['picture']) && $files['picture']['error'] == 0) {
+      $extension = pathinfo($files['picture']['name'], PATHINFO_EXTENSION);
+      $datoteka->naziv = $files['picture']['name'];
 
-            if (!in_array(strtolower($extension), $allowed)) {
-                header('location:' . URL . 'error');
-            }
-            if (!file_exists('public/img/' . $path)) {
-                mkdir('public/img/' . $path, 0777, true);
-            }
-            if (move_uploaded_file($files['picture']['tmp_name'], 'public/img/' . $path . '/' . $files['picture']['name'])) {
-                $datoteka->putanja = 'public/img/' . $path . '/' . $files['picture']['name'];
-            }
-        }
-        return $datoteka;
+      if (!in_array(strtolower($extension), $allowed)) {
+      header('location:' . URL . 'error');
+      }
+      if (!file_exists('public/img/' . $path)) {
+      mkdir('public/img/' . $path, 0777, true);
+      }
+      if (move_uploaded_file($files['picture']['tmp_name'], 'public/img/' . $path . '/' . $files['picture']['name'])) {
+      $datoteka->putanja = 'public/img/' . $path . '/' . $files['picture']['name'];
+      }
+      }
+      return $datoteka;
+      }
+     */
+
+    //Activate from korisnici
+    function activate($korIme = null) {
+        if ($korIme)
+            if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+                $this->userToActivate = $this->model->getUserInfo($korIme);
+                $this->userToActivate['id_statusRacuna'] = 2;
+                $this->userToActivate['obrisan'] = 0;
+                $user = $this->getObject($this->userToActivate);
+                if ($this->model->updateUser($user))
+                    header('location:' . URL . 'korisnici');
+                else
+                    header('location:' . URL . 'error/other/3');
+            } else
+                header('location:' . URL . 'error/other/3');
+        else
+            header('location:' . URL . 'error/other/7');
+    }
+
+    function delete($korIme = null) {
+        if ($korIme)
+            if ($this->view->currentUser["id_tipKorisnika"] > 1) {
+                $this->userToDelete = $this->model->getUserInfo($korIme);
+                $this->userToDelete['id_statusRacuna'] = 1;
+                $this->userToDelete['obrisan'] = 1;
+                $user = $this->getObject($this->userToDelete);
+                if ($this->model->updateUser($user))
+                    header('location:' . URL . 'korisnici');
+                else {
+                    if ($this->view->currentUser["korIme"] === $korIme)
+                        header('location:' . URL . 'login/logout');
+                    else
+                        header('location:' . URL . 'error/other/3');
+                }
+            } else
+                header('location:' . URL . 'error/other/3');
+        else
+            header('location:' . URL . 'error/other/7');
     }
 
     function validation($regitems, $type = 0, $json = 0) {

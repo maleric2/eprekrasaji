@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" type="text/css" href="<?php echo URL; ?>public/css/bootstrap.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo URL; ?>public/js/stranicenje.js"></script>
     <script src="<?php echo URL; ?>public/js/bootstrap.js"></script>
     <!-- Owl Carousel Assets -->
     <link href="<?php echo URL; ?>public/css/owl.carousel.css" rel="stylesheet">

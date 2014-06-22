@@ -21,11 +21,11 @@ class admin extends Upravljanje {
     }
 
     //action=null,change,delete,insert,details(view)
-    function korisnici($action = NULL, $korIme = NULL) {
+    /*function korisnici($action = NULL, $korIme = NULL) {
         require 'models/korisnici_model.php';
         $korisnici = new Korisnici_Model();
         $this->view->korisnici = $korisnici->getAllUsersInfo();
-        /* CHANGE*/
+
         if ($action == "change") {
             if(!$korIme)header('location:' . URL . 'error/');
             else if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
@@ -34,10 +34,10 @@ class admin extends Upravljanje {
             } else {
                 header('location:' . URL . 'error/other/2');
             }
-            /* INSERT NOT DONE */
+
         } else if ($action == "insert") {
             $pages = array('admin/header', 'crud/prekrsaji_insert', 'admin/footer');
-            /* DETAILS */
+
         } else if ($action == "details") {
             if ($this->view->currentUser["id_tipKorisnika"] > 1 || $this->view->currentUser["korIme"] === $korIme) {
                 $this->view->user = $korisnici->getUserInfo($korIme);
@@ -52,7 +52,7 @@ class admin extends Upravljanje {
             header('location:' . URL . 'error');
 
         $this->view->advRender($pages);
-    }
+    }*/
     /*function testquery(){
         require 'models/prekrsaji_model.php';
         $prekrsaji = new Prekrsaji_Model();

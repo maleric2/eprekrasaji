@@ -14,6 +14,11 @@ class Session {
             return $_SESSION[$key];
     }
     public static function destroy(){
+        $currentUser = Session::get('user');
+        require_once 'Model.php';
+        $model = new Model();
+        $model->insertInSession(array("id_sesija"=>$currentUser['id_sesija']));
+        
         session_destroy();
     }
     public static function update($key, $oib=null, $ime=null, $prezime=null, $email=null, $id_statusRacuna=null){

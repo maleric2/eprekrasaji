@@ -19,12 +19,13 @@
     <br>
     <?php if (count($this->prekrsaji) > 0): ?> 
         <table class="table table-striped">
-            <tr><th>Datum</th><th>Vrijeme</th>
+          <thead>  <tr><th>Datum</th><th>Vrijeme</th>
                 <th>Lokacija</th><th>Opis</th>
                 <th>Zastara</th><th>Detalji</th>
                 <th>Obriši</th><th>Promjena</th>
                 <th>Slike</th>
-            </tr>
+            </tr></thead>
+          <tbody>
             <?php
             $brojac = 0;
             foreach ($this->prekrsaji as $key => $value) {
@@ -53,6 +54,7 @@
                 <p>Trenutno nemate nikakvih prekršaja</p>
             </div>
         <?php endif; ?> 
+          </tbody>
     </table>
     <br>
 </article>

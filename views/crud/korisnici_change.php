@@ -12,17 +12,17 @@ if ($this->user['obrisan']) {
     $this->user['status'] = "OBRISAN";
 }
 ?>
-<form id="forma3" class="form-horizontal" name="details" action="<?php echo URL ?>korisnici/update" method="POST" enctype="multipart/form-data" >
+<form id="forma3" class="form-horizontal" name="details" action="<?php echo URL ?>crud/korisnici/update" method="POST" enctype="multipart/form-data" >
     <fieldset class="panel panel-default">
-        
+
         <div class="panel-body">
-             <?php if ($this->user['putanja']): ?>
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="currentPicture"></label>
-                <div class="col-md-5">
-                    <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+            <?php if ($this->user['putanja']): ?>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="currentPicture"></label>
+                    <div class="col-md-5">
+                        <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="picture"></label>
@@ -34,7 +34,20 @@ if ($this->user['obrisan']) {
                     <span class="help-block">Promjeni profilnu sliku</span>  
                 </div>
             </div>
-
+            <div class="form-group has-success">
+                <label class="col-md-4 control-label" for="id_tipKorisnika">Tip Korisnika</label>
+                <div class="col-md-5">
+                    <select class="form-control" id="id_tipKorisnika" name="id_tipKorisnika">
+                        <?php
+                        foreach ($this->tipKorisnika as $value)
+                            if ($value['id_tipKorisnika']==$this->user['id_tipKorisnika'])
+                                echo "<option selected value='{$value['id_tipKorisnika']}' >{$value['naziv']}</option>";
+                        else
+                            echo "<option value='{$value['id_tipKorisnika']}'  >{$value['naziv']}</option>";
+                        ?>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ime">Ime</label>
                 <div class="col-md-5">
@@ -83,7 +96,7 @@ if ($this->user['obrisan']) {
                     <input class="input-md form-control" type="text" id="pass" name="pass" value="<?php echo $this->user['lozinka']; ?>" > 
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label class="col-md-4 control-label" for="promjeni"></label>
                 <div class="col-md-5">
