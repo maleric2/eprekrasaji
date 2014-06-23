@@ -30,6 +30,19 @@ class Prekrsaji_Model extends Model {
         return $data;
     }
 
+    public function getUsersZalbe($oib) {
+        $sth = $this->db->prepare("SELECT z.id_zalbe, z.status as status, z.naziv as naziv, z.opis as opis, z.id_prekrsaji as id_prekrsaji FROM korisnici k "
+                . "JOIN dosje d ON k.dosje_id_dosje=d.id_dosje "
+                . "JOIN prekrsaj_korisnika p ON p.dosje_id_dosje=d.id_dosje "
+                . "JOIN prekrsaji pr ON pr.id_prekrsaji=p.prekrsaji_id_prekrsaji "
+                . "JOIN zalbe z ON pr.id_prekrsaji=z.id_prekrsaji where k.oib=:oib");
+        $sth->execute(array(
+            ':oib' => $oib
+        ));
+        $data = $sth->fetchAll();
+        return $data;
+    }
+
     public function getPrekrsajiUsers($prekrsaj) {
         $sth = $this->db->prepare("SELECT * FROM korisnici k "
                 . "JOIN dosje d ON k.dosje_id_dosje=d.id_dosje "
@@ -265,7 +278,5 @@ class Prekrsaji_Model extends Model {
             return false;
         }
     }
-
-    
 
 }

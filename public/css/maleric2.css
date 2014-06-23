@@ -226,6 +226,27 @@ section{
     text-decoration: none;
 }
 
+.table-select tbody tr:hover{
+    background-color: #d9534f;
+    color:white;
+}
+.table-buttons-btn{
+    padding-top: 16px;
+    padding-bottom: 20px;
+}
+.table-buttons-1 tfoot td{
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.table-buttons-1 button{
+    background-color:#999999;
+    border: none;
+}
+.table-buttons-1 button:hover{
+    background-color: #3276b1;
+    border: none;
+}
+
 /*    SIDEBAR && PANEL          */
 #wrapper {
     padding-left: 220px;

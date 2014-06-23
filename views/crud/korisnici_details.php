@@ -1,26 +1,27 @@
 <h1 class="center">Detalji korisnika </h1>
-  <?php //var_dump($this->user);
- if ($this->user['id_statusRacuna'] == 1) {
-      $this->user['status'] = "neaktivan";
-  } elseif ($this->user['id_statusRacuna'] == 2) {
-      $this->user['status'] = "aktivan";
-  } elseif ($this->user['id_statusRacuna'] == 3) {
-      $this->user['status'] = "ban";
-  }
-  if ($this->user['obrisan']) {
+<?php
+//var_dump($this->user);
+if ($this->user['id_statusRacuna'] == 1) {
+    $this->user['status'] = "neaktivan";
+} elseif ($this->user['id_statusRacuna'] == 2) {
+    $this->user['status'] = "aktivan";
+} elseif ($this->user['id_statusRacuna'] == 3) {
+    $this->user['status'] = "ban";
+}
+if ($this->user['obrisan']) {
     $this->user['status'] = "OBRISAN";
-   }
+}
 ?>
-  <form id="forma2" class="form-horizontal" name="details" method="" >
-        <fieldset class="panel panel-default">
+<form id="forma2" class="form-horizontal" name="details" method="" >
+    <fieldset class="panel panel-default">
         <div class="panel-body">
             <?php if ($this->user['putanja']): ?>
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="currentPicture">Slika</label>
-                <div class="col-md-5">
-                    <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="currentPicture">Slika</label>
+                    <div class="col-md-5">
+                        <img src="<?php echo URL . $this->user['putanja']; ?>" height="150">
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
             <div class="form-group has-success">
                 <label class="col-md-4 control-label" for="id_tipKorisnika">Tip Korisnika</label>
@@ -28,7 +29,7 @@
                     <select class="form-control no-arrow" disabled id="id_tipKorisnika" name="id_tipKorisnika" readonly>
                         <?php
                         foreach ($this->tipKorisnika as $value)
-                            if ($value['id_tipKorisnika']==$this->user['id_tipKorisnika'])
+                            if ($value['id_tipKorisnika'] == $this->user['id_tipKorisnika'])
                                 echo "<option selected value='{$value['id_tipKorisnika']}' >{$value['naziv']}</option>";
                         ?>
                     </select>
@@ -89,5 +90,12 @@
                 </div>
             </div>
         </div>
+        <?php if ($this->currentUser['korIme']==$this->user['korIme']): ?>
+        <div class="col-md-4 col-md-offset-4">
+                <a type="button" href="<?php echo URL; ?>korisnici/korisnici/change/<?php echo $this->user['korIme'];?>" class="btn btn-success btn-block">Uredi</a>
+            <br/>
+        </div>
+        <?php endif; ?>
+
     </fieldset>
- </form>
+</form>

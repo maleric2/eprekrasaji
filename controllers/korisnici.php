@@ -20,8 +20,12 @@ class Korisnici extends Upravljanje {
 
     function index() {
         Session::init();
-        $this->view->korisnici = $this->model->getAllUsersInfo();
-        $this->view->render('crud/korisnici');
+        if ($this->view->currentUser["id_tipKorisnika"] < 2 || $this->view->currentUser["korIme"] === $korIme) {
+            header('location:' . URL . 'korisnici/korisnici/details/'.$this->view->currentUser["korIme"]);
+        } else {
+            $this->view->korisnici = $this->model->getAllUsersInfo();
+            $this->view->render('crud/korisnici');
+        }
     }
 
     /* function details($korIme) {

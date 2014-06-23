@@ -38,7 +38,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="<?php echo URL; ?>index"><h4>Home</h4></a></li>
+            <li><a href="<?php echo URL; ?>index"><h4>Djelatnici</h4></a></li>
             <?php if(Session::get('loggedIn')==true):?>
             <li><a href="<?php echo URL; ?>korisnici"><h4>Korisnici</h4></a></li>
                 <li><a href="<?php echo URL; ?>prekrsaji"><h4>Moji Prekršaji</h4></a></li>

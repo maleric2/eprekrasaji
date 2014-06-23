@@ -10,9 +10,15 @@
     </div>
     <br>
     <?php //echo $this->prekrsaj['id_prekrsaja']; ?>
-    <form id="formUprave" name="uplPictures" class="form-horizontal" action="<?php echo URL ?>crud/zalbe/update/<?php echo $this->zalba['id_zalbe']?>" method="POST" enctype="multipart/form-data" >
+    <form id="formUprave" name="uplPictures" class="form-horizontal" action="<?php echo URL ?>crud/zalbe/update/<?php echo $this->zalba['id_zalbe'] ?>" method="POST" enctype="multipart/form-data" >
         <fieldset class="panel panel-default">
             <div class="panel-body">
+                <div class="form-group">
+                    <label class = "col-md-4 control-label" for = "status">Status</label>
+                    <div class = "col-md-5 ">
+                        <input id = "status" type = "text" readonly class = "form-control" name = "status" value="<?php echo $this->statusZalbe[$this->zalba['status']]; ?>"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class = "col-md-4 control-label" for = "id_prekrsaji">Žalba za prekršaj</label>
                     <div class = "col-md-5 ">
@@ -36,7 +42,11 @@
                         <input id = "naziv" type = "text" class = "form-control" name = "naziv" value="<?php echo $this->zalba['naziv']; ?>"/>
                     </div>
                 </div>
-
+                <div class="form-group">  
+                    <div class = "col-md-5 col-md-offset-4 ">
+                        <img alt = "dokaz" height=200 src="<?php echo URL . $this->zalba['putanja']; ?>">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class = "control-label col-md-4" for = "opis">Opis</label>
                     <div class = "col-md-5 ">
@@ -49,6 +59,16 @@
                         <button id = "insertBtn" name = "insert" class = "btn btn-primary btn-block form-control">Ažuriraj Žalbu</button>
                     </div>
                 </div>
+                <?php if ($this->currentUser['id_tipKorisnika']>1 && $this->zalba['status']<1): ?>
+                <div class="form-group">
+                    <div class = "col-md-2 col-md-offset-4">
+                        <a id = "prihvatiBtn" href="<?php echo URL; ?>crud/zalbe/prihvati/<?php echo $this->zalba['id_zalbe']; ?>" name = "prihvatiBtn" class = "btn btn-success btn-block form-control">Prihvati</a>
+                    </div>
+                    <div class = "col-md-2">
+                        <a id = "odbaciBtn" href="<?php echo URL; ?>crud/zalbe/odbij/<?php echo $this->zalba['id_zalbe']; ?>" name = "odbaciBtn" class = "btn btn-danger btn-block form-control">Odbaci</a>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </fieldset>
     </form>

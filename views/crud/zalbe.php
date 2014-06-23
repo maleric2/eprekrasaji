@@ -7,8 +7,11 @@
     <h1> Popis Žalbi</h1>
     <div class="row">
         <div class="col-md-4 col-md-offset-8">
-            <a href="./zalbe/insert" id="dodajBtn" class="col-md-4 btn btn-primary btn-block">Dodaj Žalbu</a>
-
+            <?php if ($this->currentUser['id_tipKorisnika'] > 1): ?>
+                <a href="<?php echo URL; ?>admin/zalbe/insert/<?php echo $this->id_prekrsaj?>" id="dodajBtn" class="col-md-4 btn btn-primary btn-block">Dodaj Žalbu</a>
+            <?php else: ?>
+                <a href="<?php echo URL; ?>korisnici/zalbe/insert/<?php echo $this->id_prekrsaj?>" id="dodajBtn" class="col-md-4 btn btn-primary btn-block">Dodaj Žalbu</a>
+            <?php endif; ?>
         </div>
     </div>
     <br>
@@ -35,7 +38,7 @@
                     $brojac++;
                 }
             if ($brojac == 0)
-                echo "<tr><td colspan=4>Nema zupanija</td></tr>";
+                echo "<tr><td colspan=4>Nema žalbi</td></tr>";
             ?>
         </tbody>
     </table>
@@ -48,11 +51,11 @@
 <script type="text/javascript">
     var URL = '<?php echo URL ?>';
 
-$(".confirm").confirm({
-    text: "Are you sure you want to delete that comment?",
-    title: "Confirmation required",
-    confirmButton: "Yes I am",
-    cancelButton: "No",
-    post: true
-});
+    $(".confirm").confirm({
+        text: "Are you sure you want to delete that comment?",
+        title: "Confirmation required",
+        confirmButton: "Yes I am",
+        cancelButton: "No",
+        post: true
+    });
 </script>

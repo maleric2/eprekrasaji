@@ -85,11 +85,12 @@ class Korisnici_Model extends Model {
               $userOld=$this->getUserInfo($item->korime);
               $item->oib=$userOld->oib;              
           }
+          if(!$item->id_policijske_uprave)$item->id_policijske_uprave=null;
 
         $sth= $this->db->prepare("UPDATE korisnici SET "
                 . " ime=:ime, prezime=:prezime, email=:email,"
                 . " lozinka=:pass, obrisan=:obrisan, id_statusRacuna=:status,"
-                . " adresa=:adresa, id_profilna_slika=:id_profilna_slika WHERE oib=:oib");
+                . " adresa=:adresa, id_profilna_slika=:id_profilna_slika, id_policijske_uprave=:uprava WHERE oib=:oib");
         $send=$sth->execute(array(
                 ':ime' => $item->ime,
                 ':prezime' => $item->prezime,
@@ -99,6 +100,7 @@ class Korisnici_Model extends Model {
                 ':adresa' => $item->adresa,
                 ':obrisan' => $item->obrisan,
                 ':status' => $item->id_statusRacuna,
+                ':uprava' => $item->id_policijske_uprave,
                 ':id_profilna_slika'=>$item->id_profilna_slika
                 ));
         //print_r($sth->errorInfo());

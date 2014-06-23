@@ -33,6 +33,12 @@ jQuery(function() {
         textIcon2 = "<i class='glyphicon glyphicon-wrench'></i>";
         klasa = "glyphicon-remove-me JQdelete";
         klasa2 = "glyphicon-edit-me JQchange";
+        /*
+         * RADI NUMERIRANJA KOD STRANIČENJA
+         */$(_table).find('tbody').children("tr").each(function(){
+             $(this).children("td:first").remove();
+        }) 
+        
         $(_table).find('tbody') /* dodaj u tablicu*/
                 .append($('<tr>').append($('<td>').append(celijaNaziv))
                         .append($('<td>').append($("<a>")
@@ -46,6 +52,7 @@ jQuery(function() {
                                 .attr('val', id)
                                 .html(textIcon2)))
                         );
+          setUPTableType2(_table);
     }
     function insertInTableUprave(celijaNaziv, celijaZupanije, id) {
         console.log("AA" + celijaNaziv);
@@ -54,9 +61,17 @@ jQuery(function() {
         textIcon2 = "<i class='glyphicon glyphicon-wrench'></i>";
         klasa = "glyphicon-remove-me JQdelete";
         klasa2 = "glyphicon-edit-me JQchange";
+        /*
+         * RADI NUMERIRANJA KOD STRANIČENJA
+         */$(_table).find('tbody').children("tr").each(function(){
+             $(this).children("td:first").remove();
+        }) 
+        
+        
+      
         $(_table).find('tbody') /* dodaj u tablicu*/
                 .append($('<tr>').append($('<td>').append(celijaNaziv))
-                        .append($('<td>').append(celijaZupanija))
+                        .append($('<td>').append(celijaZupanije))
                         .append($('<td>').append($("<a>")
                                 .attr('href', brisi)
                                 .addClass(klasa)
@@ -68,7 +83,8 @@ jQuery(function() {
                                 .attr('val', id)
                                 .html(textIcon2)))
                         );
-
+         /* DA STRANIČENJE OSVJEŽI */         
+        setUPTableType2(_table);
     }
     jQuery(_frm).submit(function(event) {
         event.preventDefault();
@@ -114,7 +130,7 @@ jQuery(function() {
         celija = $(this).parent();
         red = celija.parent();
 
-        naziv = red.children("td:first").text();
+        naziv = red.children("td:first").next().text();
         console.log(naziv);
         id = red.children("td:last").children().attr("val");
         /* MESSAGE BOX: ARE YOU SURE?*/
@@ -142,7 +158,7 @@ jQuery(function() {
         event.preventDefault();
         celija = $(this).parent();
         red = celija.parent();
-        celija1 = red.children("td:first");
+        celija1 = red.children("td:first").next(); /* PROMJENA NA NEXT*/
         id = red.children("td:last").children().attr("val");
         naziv = celija1.text();
         $("#updateNaziv").val(naziv);

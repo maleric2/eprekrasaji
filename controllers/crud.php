@@ -44,12 +44,14 @@ class crud extends Controller {
                     $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
                     $user->id_profilna_slika = $prekrsaji->insertDatoteke($datoteka);
                 } else {
-                    $user->id_profilna_slika  = $userOld["id_profilna_slika"];
+                    $user->id_profilna_slika = $userOld["id_profilna_slika"];
                 }
                 //var_dump($user->id_profilna_slika);
-                if ($korisnici->updateUser($user))
+                if ($korisnici->updateUser($user)) {
+                    if ($this->view->currentUser['id_tipKorisnika'] > 2)
+                        $upit = $prekrsaji->query("UPDATE korisnici SET id_tipKorisnika = ? WHERE oib = ?", array($user->id_tipKorisnika, $user->oib));
                     header('location:' . URL . 'admin/korisnici');
-                else
+                } else
                     header('location:' . URL . 'error');
             }
         }
@@ -355,7 +357,10 @@ class crud extends Controller {
         if ($action == "insert") {
             $zalba = $this->getObject($_POST);
             //var_dump($uprave);
-            $upit = $prekrsaji->query("INSERT INTO zalbe SET naziv = ?, opis = ?, id_prekrsaji = ?", array($zalba->naziv, $zalba->opis, $zalba->id_prekrsaji));
+            $datoteka = $this->insertSlikaInDir($_FILES, $user->korime);
+            $slika = $prekrsaji->insertDatoteke($datoteka);
+
+            $upit = $prekrsaji->query("INSERT INTO zalbe SET naziv = ?, opis = ?, id_prekrsaji = ?, dokaz = ?", array($zalba->naziv, $zalba->opis, $zalba->id_prekrsaji, $slika));
             if ($upit)
                 header('location:' . URL . 'korisnici/zalbe');
             else
@@ -376,6 +381,22 @@ class crud extends Controller {
             else
                 header('location:' . URL . 'error');
         }
+        elseif ($action == "prihvati") {
+            if($id)
+            $upit = $prekrsaji->query("UPDATE zalbe SET status = 2 WHERE id_zalbe = ? ", array($id));
+            if ($upit)
+                header('location:' . URL . 'korisnici/zalbe');
+            else
+                header('location:' . URL . 'error');
+        }
+        elseif ($action == "odbij") {
+            if($id)
+            $upit = $prekrsaji->query("UPDATE zalbe SET status = 1 WHERE id_zalbe = ? ", array($id));
+            if ($upit)
+                header('location:' . URL . 'korisnici/zalbe');
+            else
+                header('location:' . URL . 'error');
+        }
     }
 
     function policajci($action = null, $id = null) {
@@ -384,7 +405,8 @@ class crud extends Controller {
         if ($action == "policajac") {
             $policajac = $this->getObject($_POST);
             //var_dump($uprave);
-            $upit = $prekrsaji->query("UPDATE korisnici SET id_tipKorisnika = 2 WHERE oib = ?", array($policajac->oib));
+            $uprava = $prekrsaji->query("SELECT * FROM policijske_uprave where id_policijske_uprave = ? ",array($policajac->id_policijske_uprave));
+            $upit = $prekrsaji->query("UPDATE korisnici SET id_tipKorisnika = 2, id_policijske_uprave = ?, id_zupanije = ? WHERE oib = ?", array($policajac->id_policijske_uprave,$uprava['zupanije_id_zupanije'],$policajac->oib));
             if ($upit)
                 header('location:' . URL . 'admin/policajci');
             else

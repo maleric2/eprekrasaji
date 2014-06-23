@@ -36,7 +36,7 @@ $prekrsajZastaraDate = date("Y-m-d", strtotime($this->prekrsaj['vrijeme_zastare'
                       echo "<div class='checkbox checkbox-block-no-border'><label for='checkboxes-0'>"
                         . "<input type='checkbox' checked name='oib[]' value='{$value["oib"]}'>"
                         . "{$value["ime"]} {$value["prezime"]}"
-                        . '<a href="'.URL.'korisnici/'.$value["oib"].'"><span class="glyphicon glyphicon-list-alt pull-right"></span></a>'
+                        . '<a href="'.URL.'korisnici/korisnici/details/'.$value["korIme"].'"><span class="glyphicon glyphicon-list-alt pull-right"></span></a>'
                                 . '</label></div>';
                       ?>
                 </div>
@@ -57,6 +57,12 @@ $prekrsajZastaraDate = date("Y-m-d", strtotime($this->prekrsaj['vrijeme_zastare'
                 <label class="col-md-4 control-label" for="mjesto">Mjesto</label>
                 <div class="col-md-5">
                     <input  class="input-md form-control" disabled type="text" name="mjesto" id="mjesto" value="<?php echo $this->prekrsaj['mjesto']; ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="zupanija">Županija</label>
+                <div class="col-md-5">
+                    <input  class="input-md form-control" disabled type="text" name="zupanija" id="zupanija" value="<?php echo $this->adresa['naziv']; ?>">
                 </div>
             </div>
             <div class="form-group">

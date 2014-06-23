@@ -31,7 +31,18 @@
                         </select>
                         <span class = "help-block">Odaberi korisnika sa popisa</span>
                     </div>
-                    <div class = "col-md-4 col-md-offset-4">
+                    <div class="col-md-4">
+                        <label class="control-label" for="id_policijske_uprave">Policijska uprava</label>
+                        <select class="form-control" name="id_policijske_uprave" id="id_policijske_uprave">
+                            <?php
+                            foreach ($this->uprave as $value) {
+                                echo "<option value={$value['id_policijske_uprave']}>{$value['naziv']}</option>";
+                            }
+                            ?>
+                        </select>
+                        <span class = "help-block">Odaberi policijsku upravu sa popisa</span>
+                    </div>
+                    <div class = "col-md-4">
                         <label class = "control-label"></label>
                         <button id = "insertPolicajac" name = "insert" class = "btn btn-primary btn-block form-control">Dodaj policajca</button>
                     </div>
@@ -41,8 +52,8 @@
     </form>
     
     <table class="table table-striped">
-        <tr><th>Ime</th><th>Slika</th>
-            <th>Prezime</th><th>Adresa</th>
+        <tr><th>Slika</th><th>Ime</th>
+            <th>Prezime</th><th>Uprava</th>
             <th>E-mail</th><th>Korisnicko ime</th>
             <th colspan="3"> Operacije </th>
         </tr>
@@ -57,10 +68,10 @@
                             echo "<tr class='success'>";
                         else
                             echo "<tr>";
-                        echo "<td>{$value['ime']}</td>";
                         echo "<td><a href='./korisnici/details/{$value['korIme']}'><img src='" . URL . "{$value['putanja']}' height=40></a></td>";
+                        echo "<td>{$value['ime']}</td>";
                         echo "<td>{$value['prezime']}</td>";
-                        echo "<td>{$value['adresa']}</td>";
+                        echo "<td>{$value['uprava']} </td>";
                         echo "<td>{$value['email']}</td>";
                         echo "<td>{$value['korIme']}</td>";
                         echo "<td><a title='Detalji' class='glyphicon-view-me' href='" . URL . "korisnici/korisnici/details/{$value['korIme']}'><i class='glyphicon glyphicon-list-alt'></i></a></td>";

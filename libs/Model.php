@@ -55,9 +55,10 @@ class Model {
             $data = $sth->fetchAll();
             if (count($data) > 1)
                 return $data;
-            elseif (count($data) == 1 && $formatValue) {
+            elseif (count($data) == 1 && $formatValue)
                 return $data[0];
-            } else
+            else if(count($data) == 1) return $data;
+            else
                 return false;
         }
         elseif (strpos($queryString, "INSERT") !== false) {

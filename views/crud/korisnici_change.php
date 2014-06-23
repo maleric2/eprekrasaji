@@ -40,14 +40,31 @@ if ($this->user['obrisan']) {
                     <select class="form-control" id="id_tipKorisnika" name="id_tipKorisnika">
                         <?php
                         foreach ($this->tipKorisnika as $value)
-                            if ($value['id_tipKorisnika']==$this->user['id_tipKorisnika'])
+                            if ($value['id_tipKorisnika'] == $this->user['id_tipKorisnika'])
                                 echo "<option selected value='{$value['id_tipKorisnika']}' >{$value['naziv']}</option>";
-                        else
-                            echo "<option value='{$value['id_tipKorisnika']}'  >{$value['naziv']}</option>";
+                            else
+                                echo "<option value='{$value['id_tipKorisnika']}'  >{$value['naziv']}</option>";
                         ?>
                     </select>
                 </div>
             </div>
+            <?php if ($this->user['id_tipKorisnika'] == 2): ?>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="id_policijske_uprave">Policijska uprava</label>
+                    <div class="col-md-5">
+                        <select class="form-control" name="id_policijske_uprave" id="id_policijske_uprave">
+                            <?php
+                            foreach ($this->uprave as $value) {
+                                if ($this->user['id_policijske_uprave']==$this->uprave['$this->uprave'])
+                                    echo "<option selected value={$value['id_policijske_uprave']}>{$value['naziv']}</option>";
+                                else
+                                    echo "<option value={$value['id_policijske_uprave']}>{$value['naziv']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ime">Ime</label>
                 <div class="col-md-5">
